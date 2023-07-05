@@ -6,6 +6,7 @@ data class Contact(
     val familyName: String,
     val giveName: String,
     val phone: String,
-    val updatedAt: Long
-) : Data(id)
+    override val updatedAt: Long,
+    override val createdAt: Long = 0
+) : DataID, DataDate
 
