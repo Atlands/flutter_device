@@ -1,6 +1,7 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'flutter_device_method_channel.dart';
+import 'model/contact.dart';
 
 abstract class FlutterDevicePlatform extends PlatformInterface {
   /// Constructs a FlutterDevicePlatform.
@@ -24,6 +25,10 @@ abstract class FlutterDevicePlatform extends PlatformInterface {
   }
 
   Future<String?> getPlatformVersion() {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+  Future<Contact?> contactPicker(){
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 }

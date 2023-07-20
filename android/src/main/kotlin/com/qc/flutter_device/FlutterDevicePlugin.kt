@@ -3,6 +3,7 @@ package com.qc.flutter_device
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.annotation.NonNull
+import com.google.gson.Gson
 import com.qc.device.DataCenter
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -20,7 +21,10 @@ class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
     /// when the Flutter Engine is detached from the Activity
     private lateinit var channel: MethodChannel
-    lateinit var dataCenter: DataCenter
+    private lateinit var contactPicker: ContactPicker
+    private lateinit var dataCenter: DataCenter
+
+    private var GSON = Gson()
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "flutter_device")
@@ -28,11 +32,14 @@ class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
+        when (call.method) {
+            "contact_picker" -> {
+                contactPicker.picker {
+                    result.success(GSON.toJson(it.data))
+                }
+            }
 
-        if (call.method == "getPlatformVersion") {
-            result.success("Android ${android.os.Build.VERSION.RELEASE}")
-        } else {
-            result.notImplemented()
+            else -> result.notImplemented()
         }
     }
 
@@ -41,7 +48,9 @@ class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
-        dataCenter = DataCenter(binding.activity as ComponentActivity)
+        val activity = binding.activity as ComponentActivity
+        contactPicker = ContactPicker(activity)
+        dataCenter = DataCenter(activity)
     }
 
     override fun onDetachedFromActivityForConfigChanges() {
