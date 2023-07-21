@@ -25,4 +25,10 @@ class MethodChannelFlutterDevice extends FlutterDevicePlatform {
     if (result == null) return null;
     return Contact.fromJson(jsonDecode(result));
   }
+
+  @override
+  Future<String?> cameraPicker() async{
+    String? result = await methodChannel.invokeMethod('camera_picker');
+    return result;
+  }
 }

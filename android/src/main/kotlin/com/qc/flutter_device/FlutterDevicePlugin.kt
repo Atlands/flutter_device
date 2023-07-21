@@ -1,6 +1,5 @@
 package com.qc.flutter_device
 
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.annotation.NonNull
 import com.google.gson.Gson
@@ -20,8 +19,10 @@ class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     ///
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
     /// when the Flutter Engine is detached from the Activity
+    private lateinit var activity: ComponentActivity
     private lateinit var channel: MethodChannel
     private lateinit var contactPicker: ContactPicker
+    private lateinit var cameraPicker: CameraPicker
     private lateinit var dataCenter: DataCenter
 
     private var GSON = Gson()
@@ -39,6 +40,26 @@ class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 }
             }
 
+            "camera_picker" -> {
+                val font = call.arguments as? Boolean ?: false
+                cameraPicker.picker(font) {
+                    if (it.code == 200) {
+                        result.success(GSON.toJson(it.data))
+                    } else {
+                        result.error(it.code.toString(), it.message, null)
+                    }
+                }
+            }
+
+//            "get_package_info" -> {
+//                try {
+//                    val info = PackageInfo.getPackageInfo(activity)
+//                    result.success(GSON.toJson(info))
+//                } catch (e: Exception) {
+//                    result.error("1001", e.message ?: "", null)
+//                }
+//            }
+
             else -> result.notImplemented()
         }
     }
@@ -48,8 +69,9 @@ class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
-        val activity = binding.activity as ComponentActivity
+        activity = binding.activity as ComponentActivity
         contactPicker = ContactPicker(activity)
+        cameraPicker = CameraPicker(activity)
         dataCenter = DataCenter(activity)
     }
 

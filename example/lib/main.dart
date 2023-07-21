@@ -17,6 +17,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
+
   // final _flutterDevicePlugin = FlutterDevice();
 
   // @override
@@ -61,9 +62,20 @@ class _MyAppState extends State<MyApp> {
               children: [
                 ElevatedButton(
                     onPressed: () async {
-                    var result = await  FlutterDevice.contactPicker();
-                    print(result);
-                    }, child: Text("contact picker"))
+                      var result = await FlutterDevice.contactPicker();
+                      print(result);
+                    },
+                    child: Text("contact picker")),
+                ElevatedButton(
+                    onPressed: () async {
+                      try {
+                        var result = await FlutterDevice.cameraPicker();
+                        print(result);
+                      } catch (e) {
+                        print(e);
+                      }
+                    },
+                    child: Text('camera picker')),
               ],
             ),
           ),
