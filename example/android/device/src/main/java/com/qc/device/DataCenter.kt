@@ -7,9 +7,10 @@ import com.qc.device.model.App
 import com.qc.device.model.Contact
 import com.qc.device.model.DataDate
 import com.qc.device.model.DataID
+import com.qc.device.model.Result
+import com.qc.device.model.ResultError
 import com.qc.device.utils.ContactUtil
 import com.qc.device.utils.PackageUtil
-import com.qc.device.utils.Task
 
 object PreferencesKey {
     const val Contact_IDS = "contact_ids"
@@ -21,13 +22,13 @@ class DataCenter(activity: ComponentActivity) {
     private val preferences: SharedPreferences =
         activity.getSharedPreferences("DeviceData", Context.MODE_PRIVATE)
 
-    fun getContacts(result: Task<List<Contact>>) {
-        contactUtil.getContacts { contacts, error ->
-            if (error == null) {
-                val data = deduplicationByID(contacts!!, PreferencesKey.Contact_IDS)
-                result(data, null)
+    fun getContacts(onResult: (Result<List<Contact>>) -> Unit) {
+        contactUtil.getContacts {
+            if (it.code == ResultError.RESULT_OK) {
+                val data = deduplicationByID(it.data, PreferencesKey.Contact_IDS)
+                onResult(it.copy(data = data))
             } else {
-                result(null, error)
+                onResult(it)
             }
         }
     }

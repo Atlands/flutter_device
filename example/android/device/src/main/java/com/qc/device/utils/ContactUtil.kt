@@ -7,31 +7,38 @@ import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.qc.device.model.Contact
+import com.qc.device.model.ResultError
+import com.qc.device.model.Result
 
 class ContactUtil(private val activity: ComponentActivity) {
-    private var result: (Task<List<Contact>>)? = null
+    private var onResult: ((Result<List<Contact>>) -> Unit)? = null
     private var allContacts = mutableListOf<Contact>()
 
     private val permission =
         activity.registerForActivityResult(ActivityResultContracts.RequestPermission()) {
             if (it) {
-                result?.invoke(allContacts(), null)
+                onResult?.invoke(Result(ResultError.RESULT_OK, null, allContacts()))
             } else {
-                result?.invoke(
-                    null,
-                    ResultError(ResultError.Permission_Contact, "contact permission denied")
+                onResult?.invoke(
+                    Result(
+                        ResultError.CONTACT_PERMISSION,
+                        "contact permission denied",
+                        emptyList()
+                    )
                 )
             }
+            onResult = null
         }
 
-    fun getContacts(task: Task<List<Contact>>) {
-        this.result = task
+    fun getContacts(onResult: (Result<List<Contact>>) -> Unit) {
+        this.onResult = onResult
         if (ContextCompat.checkSelfPermission(
                 activity,
                 Manifest.permission.READ_CONTACTS
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            result?.invoke(allContacts(), null)
+            this.onResult?.invoke(Result(ResultError.RESULT_OK, null, allContacts()))
+            this.onResult = null
         } else {
             permission.launch(Manifest.permission.READ_CONTACTS)
         }
@@ -61,16 +68,5 @@ class ContactUtil(private val activity: ComponentActivity) {
         }
         cursor.close()
         return allContacts
-    }
-}
-
-typealias Task<T> = (T?, ResultError?) -> Unit
-
-data class ResultError(
-    val code: Int,
-    val message: String,
-) {
-    companion object {
-        const val Permission_Contact = 100001
     }
 }

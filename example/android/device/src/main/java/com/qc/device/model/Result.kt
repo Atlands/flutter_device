@@ -14,4 +14,5 @@ object  ResultError{
     const val RESULT_OK = 200
     const val PACKAGE_EXCEPTION = 100001
     const val CAMERA_PERMISSION = 100002
+    const val CONTACT_PERMISSION = 100003
 }
