@@ -13,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.qc.device.model.Result
+import com.qc.device.model.ResultError
 import java.io.File
 import java.util.UUID
 
@@ -28,7 +29,13 @@ class CameraPicker(private val activity: ComponentActivity) {
             if (it) {
                 takePicture()
             } else {
-                onResult?.invoke(Result(1002, "camera permission denied", null))
+                onResult?.invoke(
+                    Result(
+                        ResultError.CAMERA_PERMISSION,
+                        "camera permission denied",
+                        null
+                    )
+                )
                 onResult = null
             }
         }

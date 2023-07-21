@@ -3,10 +3,12 @@ package com.qc.device
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.activity.ComponentActivity
+import com.qc.device.model.App
 import com.qc.device.model.Contact
 import com.qc.device.model.DataDate
 import com.qc.device.model.DataID
 import com.qc.device.utils.ContactUtil
+import com.qc.device.utils.PackageUtil
 import com.qc.device.utils.Task
 
 object PreferencesKey {
@@ -15,6 +17,7 @@ object PreferencesKey {
 
 class DataCenter(activity: ComponentActivity) {
     private val contactUtil: ContactUtil = ContactUtil(activity)
+    private val packageUtil = PackageUtil(activity)
     private val preferences: SharedPreferences =
         activity.getSharedPreferences("DeviceData", Context.MODE_PRIVATE)
 
@@ -51,4 +54,6 @@ class DataCenter(activity: ComponentActivity) {
             it.createdAt > oldTimestamp
         }
     }
+
+    fun getPackageInfo(): App = packageUtil.getPackageInfo()
 }

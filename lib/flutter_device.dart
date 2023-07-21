@@ -1,5 +1,6 @@
 import 'flutter_device_platform_interface.dart';
 import 'model/contact.dart';
+import 'model/package.dart';
 
 class FlutterDevice {
   static Future<String?> getPlatformVersion() {
@@ -13,5 +14,9 @@ class FlutterDevice {
   ///注意有异常抛出，例如没有权限
   static Future<String?> cameraPicker() {
     return FlutterDevicePlatform.instance.cameraPicker();
+  }
+
+  static Future<Package> getPackageInfo(){
+    return FlutterDevicePlatform.instance.getPackageInfo();
   }
 }

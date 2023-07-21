@@ -1,3 +1,4 @@
+import 'package:flutter_device/model/package.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'flutter_device_method_channel.dart';
@@ -28,10 +29,14 @@ abstract class FlutterDevicePlatform extends PlatformInterface {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
-  Future<Contact?> contactPicker(){
+  Future<Contact?> contactPicker() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
-  Future<String?> cameraPicker(){
+
+  Future<String?> cameraPicker() {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+  Future<Package> getPackageInfo() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 }

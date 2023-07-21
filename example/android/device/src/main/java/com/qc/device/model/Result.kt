@@ -8,3 +8,10 @@ data class Result<T>(
     @SerializedName("message") val message: String? = null,
     @SerializedName("data") val data: T,
 )
+
+
+object  ResultError{
+    const val RESULT_OK = 200
+    const val PACKAGE_EXCEPTION = 100001
+    const val CAMERA_PERMISSION = 100002
+}

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_device/model/package.dart';
 
 import 'flutter_device_platform_interface.dart';
 import 'model/contact.dart';
@@ -27,8 +28,14 @@ class MethodChannelFlutterDevice extends FlutterDevicePlatform {
   }
 
   @override
-  Future<String?> cameraPicker() async{
+  Future<String?> cameraPicker() async {
     String? result = await methodChannel.invokeMethod('camera_picker');
     return result;
+  }
+
+  @override
+  Future<Package> getPackageInfo() async {
+    String result = await methodChannel.invokeMethod('get_package_info');
+    return Package.fromJson(jsonDecode(result));
   }
 }

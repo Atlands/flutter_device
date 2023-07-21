@@ -76,6 +76,10 @@ class _MyAppState extends State<MyApp> {
                       }
                     },
                     child: Text('camera picker')),
+                ElevatedButton(onPressed: ()async{
+                  var result = await FlutterDevice.getPackageInfo();
+                  print(result);
+                }, child: Text("Package Info"))
               ],
             ),
           ),

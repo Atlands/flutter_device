@@ -7,6 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import com.qc.device.model.Contact
 import com.qc.device.model.Result
+import com.qc.device.model.ResultError
 import com.qc.device.utils.string
 
 class ContactPicker(private val activity: ComponentActivity) {
@@ -15,7 +16,7 @@ class ContactPicker(private val activity: ComponentActivity) {
             activityResult?.data?.data?.let {
                 val contact = uriToContact(it)
                 result?.let { res ->
-                    res(Result(code = 200, data = contact))
+                    res(Result(code = ResultError.RESULT_OK, data = contact))
                 }
             }
             result = null

@@ -4,6 +4,7 @@ import androidx.activity.ComponentActivity
 import androidx.annotation.NonNull
 import com.google.gson.Gson
 import com.qc.device.DataCenter
+import com.qc.device.model.ResultError
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -43,7 +44,7 @@ class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "camera_picker" -> {
                 val font = call.arguments as? Boolean ?: false
                 cameraPicker.picker(font) {
-                    if (it.code == 200) {
+                    if (it.code == ResultError.RESULT_OK) {
                         result.success(GSON.toJson(it.data))
                     } else {
                         result.error(it.code.toString(), it.message, null)
@@ -51,14 +52,14 @@ class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 }
             }
 
-//            "get_package_info" -> {
-//                try {
-//                    val info = PackageInfo.getPackageInfo(activity)
-//                    result.success(GSON.toJson(info))
-//                } catch (e: Exception) {
-//                    result.error("1001", e.message ?: "", null)
-//                }
-//            }
+            "get_package_info" -> {
+                try {
+                    val info = dataCenter.getPackageInfo()
+                    result.success(GSON.toJson(info))
+                } catch (e: Exception) {
+                    result.error(ResultError.PACKAGE_EXCEPTION.toString(), e.message ?: "", null)
+                }
+            }
 
             else -> result.notImplemented()
         }
