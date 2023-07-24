@@ -40,6 +40,10 @@ class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
         when (call.method) {
+            "device_id" -> {
+                val id = dataCenter.getDeviceId()
+                result.success(id)
+            }
             "install_referrer" -> activity.lifecycleScope.launch(Dispatchers.IO) {
                 val referrerDetail = ReferrerUtil.getReferrerDetails(activity)
                 withContext(Dispatchers.Main) { result.success(GSON.toJson(referrerDetail)) }

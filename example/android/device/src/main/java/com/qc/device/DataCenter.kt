@@ -3,6 +3,7 @@ package com.qc.device
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.activity.ComponentActivity
+import androidx.core.content.edit
 import com.qc.device.model.App
 import com.qc.device.model.Contact
 import com.qc.device.model.DataDate
@@ -10,15 +11,19 @@ import com.qc.device.model.DataID
 import com.qc.device.model.Result
 import com.qc.device.model.ResultError
 import com.qc.device.utils.ContactUtil
+import com.qc.device.utils.DeviceUtil
 import com.qc.device.utils.PackageUtil
+import java.util.UUID
 
 object PreferencesKey {
+    const val device_ID = "device_id"
     const val Contact_IDS = "contact_ids"
 }
 
 class DataCenter(activity: ComponentActivity) {
     private val contactUtil: ContactUtil = ContactUtil(activity)
     private val packageUtil = PackageUtil(activity)
+    private val deviceUtil = DeviceUtil(activity)
     private val preferences: SharedPreferences =
         activity.getSharedPreferences("DeviceData", Context.MODE_PRIVATE)
 
@@ -56,5 +61,22 @@ class DataCenter(activity: ComponentActivity) {
         }
     }
 
+    /**
+     * 获取本包信息
+     */
     fun getPackageInfo(): App = packageUtil.getPackageInfo()
+
+    /**
+     * 获取设备唯一标识符
+     */
+    fun getDeviceId(): String = deviceUtil.getAndroidID().ifBlank {
+        var id = preferences.getString(PreferencesKey.device_ID, "") ?: ""
+        if (id.isBlank()) {
+            id = UUID.randomUUID().toString()
+            preferences.edit {
+                putString(PreferencesKey.device_ID, id)
+            }
+        }
+        return@ifBlank id
+    }
 }

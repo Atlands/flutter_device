@@ -16,7 +16,7 @@ class MethodChannelFlutterDevice extends FlutterDevicePlatform {
   @override
   Future<String?> getPlatformVersion() async {
     final version =
-        await methodChannel.invokeMethod<String>('getPlatformVersion');
+    await methodChannel.invokeMethod<String>('getPlatformVersion');
     return version;
   }
 
@@ -37,5 +37,17 @@ class MethodChannelFlutterDevice extends FlutterDevicePlatform {
   Future<Package> getPackageInfo() async {
     String result = await methodChannel.invokeMethod('get_package_info');
     return Package.fromJson(jsonDecode(result));
+  }
+
+  @override
+  Future<String> getDeviceId() async {
+    String result = await methodChannel.invokeMethod('device_id');
+    return result;
+  }
+
+  @override
+  Future<Map<String, dynamic>> getReferrer() async {
+    String result = await methodChannel.invokeMethod('install_referrer');
+    return jsonDecode(result);
   }
 }

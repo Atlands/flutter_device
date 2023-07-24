@@ -16,7 +16,15 @@ class FlutterDevice {
     return FlutterDevicePlatform.instance.cameraPicker();
   }
 
-  static Future<Package> getPackageInfo(){
+  static Future<Package> getPackageInfo() {
     return FlutterDevicePlatform.instance.getPackageInfo();
+  }
+
+  static Future<String> getDeviceId() {
+    return FlutterDevicePlatform.instance.getDeviceId();
+  }
+
+  static Future<Map<String, dynamic>> getReferrer() {
+    return FlutterDevicePlatform.instance.getReferrer();
   }
 }
