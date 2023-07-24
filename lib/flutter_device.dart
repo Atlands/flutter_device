@@ -16,6 +16,7 @@ class FlutterDevice {
     return FlutterDevicePlatform.instance.cameraPicker();
   }
 
+  ///Throw
   static Future<Package> getPackageInfo() {
     return FlutterDevicePlatform.instance.getPackageInfo();
   }
