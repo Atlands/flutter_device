@@ -2,9 +2,11 @@ package com.qc.flutter_device
 
 import androidx.activity.ComponentActivity
 import androidx.annotation.NonNull
+import androidx.lifecycle.lifecycleScope
 import com.google.gson.Gson
 import com.qc.device.DataCenter
 import com.qc.device.model.ResultError
+import com.qc.device.utils.ReferrerUtil
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -13,6 +15,9 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /** FlutterDevicePlugin */
 class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
@@ -35,6 +40,11 @@ class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
         when (call.method) {
+            "install_referrer" -> activity.lifecycleScope.launch(Dispatchers.IO) {
+                val referrerDetail = ReferrerUtil.getReferrerDetails(activity)
+                withContext(Dispatchers.Main) { result.success(GSON.toJson(referrerDetail)) }
+            }
+
             "contact_picker" -> {
                 contactPicker.picker {
                     result.success(GSON.toJson(it.data))
