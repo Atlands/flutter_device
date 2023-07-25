@@ -44,7 +44,7 @@ class CameraPicker(private val activity: ComponentActivity) {
         activity.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
                 photoFilePath?.let { path ->
-                    onResult?.invoke(Result(200, null, path))
+                    onResult?.invoke(Result(ResultError.RESULT_OK, null, path))
                 }
             }
             onResult = null

@@ -49,7 +49,7 @@ data class Device(
      * 注册的Wi-Fi列表，configuredNetworks
      * 需要精确GPS定位
      */
-    val regWifiList: WifiInfo,
+    val regWifiList: List<WifiInfo>,
 
     /**
      * 屏幕相关
@@ -59,7 +59,7 @@ data class Device(
     /**
      * 传感器
      */
-    val sensorList: List<SensorList>,
+    val sensorList: List<SensorInfo>,
 
     val sim: List<Sim>,
 
@@ -512,7 +512,7 @@ data class Device(
          */
         val ssid: String? = null,
 
-//        val timestamp: Long
+        val timestamp: Long? = null
     )
 
     /**
@@ -522,138 +522,138 @@ data class Device(
         /**
          * 屏幕亮度，0-255
          */
-        val brightness: Double,
+        val brightness: Int? = null,
 
         /**
          * 密度，像素比例：0.75/1.0/1.5/2.0
          */
-        val density: Long,
+        val density: Float? = null,
 
         /**
          * 显示屏参数
          */
-        val display: String,
+        val display: String? = null,
 
         /**
          * 屏幕密度，每寸像素：120/160/240/320
          */
-        val dpi: Double,
+        val dpi: Int? = null,
 
         /**
          * 高
          */
-        val height: Double,
+        var height: Int? = null,
 
         /**
          * 物理尺寸，宽*高
          */
-        val physicalSize: String,
+        val physicalSize: String? = null,
 
         /**
          * 分辨率，1080*1920
          */
-        val resolution: String,
+        val resolution: String? = null,
 
         /**
          * 宽
          */
-        val width: Double
+        var width: Int? = null
     )
 
-    data class SensorList(
+    data class SensorInfo(
         /**
          * 传感器单元中传感器的最大范围，"39.2266"
          */
-        val maxRange: String,
+        val maxRange: Float? = null,
 
         /**
          * 两个事件之间允许的最小延迟
          */
-        val minDelay: String,
+        val minDelay: Int? = null,
 
         /**
          * 名字
          */
-        val name: String,
+        val name: String? = null,
 
         /**
          * 功率(mA)
          */
-        val power: String,
+        val power: Float? = null,
 
         /**
          * 传感器的精度
          */
-        val resolution: String,
+        val resolution: Float? = null,
 
         /**
          * 通用类型
          */
-        val type: String,
+        val type: Int? = null,
 
         /**
          * 供应商
          */
-        val vendor: String,
+        val vendor: String? = null,
 
         /**
          * 版本号
          */
-        val version: String
+        val version: Int? = null
     )
 
     data class Sim(
         /**
          * 网络运营商名称
          */
-        val carrierName: String,
+        val carrierName: String? = null,
 
         /**
          * 基站编号
          */
-        val cid: String,
+        val cid: String? = null,
 
         /**
          * sim卡ISO国家代码，等同于SIM提供商的国家代码
          */
-        val countryISO: String,
+        val countryISO: String? = null,
 
         /**
          * 手机信号强度
          */
-        val dbm: String,
+        val dbm: String? = null,
 
-        val dns: String,
+        val dns: String? = null,
 
         /**
          * 集成电路卡识别码
          */
-        val iccid: String,
+        val iccid: String? = null,
 
         /**
          * 卡槽移动设备身份码
          */
-        val imei: String,
+        val imei: String? = null,
 
         /**
          * sim卡移动用户身份，android 10以下能取到
          */
-        val imsi: String,
+        val imsi: String? = null,
 
         /**
          * Mcc/IMSIMCC（移动国家代码）
          */
-        val mcc: String,
+        val mcc: String? = null,
 
         /**
          * 移动设备识别码，卡槽移动设备身份码1(android10及以上无法取)
          */
-        val meid: String,
+        val meid: String? = null,
 
         /**
          * Mnc/IMSIMNC（移动网络代码）
          */
-        val mnc: String,
+        val mnc: String? = null,
 
         /**
          * 当前网络类型，NETWORK_2G
@@ -661,24 +661,24 @@ data class Device(
          * NETWORK_4G
          * NETWORK_5G
          */
-        val networkType: String,
+        val networkType: String? = null,
 
         /**
          * 当前注册运营商的数字名称，MCC+MNC
          */
-        val operator: String,
+        val operator: String? = null,
 
         /**
          * 手机号
          */
-        val phoneNumber: String,
+        val phoneNumber: String? = null,
 
         /**
          * sim卡的序列号
          */
-        val serialNumber: String,
+        val serialNumber: String? = null,
 
-        val subId: String
+        val subId: String? = null,
     )
 
     /**
@@ -688,22 +688,22 @@ data class Device(
         /**
          * 给当前app分配的容量
          */
-        val app: AppClass,
+        val app: AppClass? = null,
 
         /**
          * 运行内存
          */
-        val ram: AppClass,
+        val ram: AppClass? = null,
 
         /**
          * SD卡存储
          */
-        val sd: AppClass,
+        val sd: AppClass? = null,
 
         /**
          * 内部存储
          */
-        val storage: AppClass
+        val storage: AppClass? = null,
     )
 
     data class AppClass(

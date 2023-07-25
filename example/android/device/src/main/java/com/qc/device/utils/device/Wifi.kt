@@ -8,21 +8,22 @@ import android.net.ConnectivityManager
 import android.net.wifi.WifiManager
 import androidx.core.content.ContextCompat
 import com.qc.device.model.Device
+import com.qc.device.utils.DeviceUtil
 
 @SuppressLint("HardwareIds")
-fun getWifi(context: Context): Device.WifiInfo? {
+fun DeviceUtil.getWifi(): Device.WifiInfo? {
 
     if (ContextCompat.checkSelfPermission(
-            context,
+            activity,
             Manifest.permission.ACCESS_FINE_LOCATION
         ) != PackageManager.PERMISSION_GRANTED
     ) return null
 
     val manager =
-        context.applicationContext.getSystemService(Context.WIFI_SERVICE) as? WifiManager
+        activity.applicationContext.getSystemService(Context.WIFI_SERVICE) as? WifiManager
             ?: return null
 
-    if(manager.wifiState != WifiManager.WIFI_STATE_ENABLED) return null
+    if (manager.wifiState != WifiManager.WIFI_STATE_ENABLED) return null
     val info = manager.connectionInfo
 
     return Device.WifiInfo(
@@ -34,6 +35,35 @@ fun getWifi(context: Context): Device.WifiInfo? {
         rssi = info.rssi,
         frequency = info.frequency,
     )
+}
+
+fun DeviceUtil.getWifiList(registered: Boolean): List<Device.WifiInfo> {
+    if (ContextCompat.checkSelfPermission(
+            activity,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) != PackageManager.PERMISSION_GRANTED
+    ) return emptyList()
+
+    val manager =
+        activity.applicationContext.getSystemService(Context.WIFI_SERVICE) as? WifiManager
+            ?: return emptyList()
+    return if (registered) manager.configuredNetworks.map {
+        Device.WifiInfo(
+            ssid = it.SSID,
+            bssid = it.BSSID
+        )
+    }
+    else
+        manager.scanResults.map {
+            Device.WifiInfo(
+                ssid = it.BSSID,
+                bssid = it.BSSID,
+                capabilities = it.capabilities,
+                rssi = it.level,
+                frequency = it.frequency,
+                timestamp = it.timestamp
+            )
+        }
 }
 //
 //private fun isWifiConnection(context: Context): Boolean {
