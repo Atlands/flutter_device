@@ -9,8 +9,8 @@ import com.qc.device.model.Device
 import com.qc.device.utils.DeviceUtil
 
 
-fun DeviceUtil.getSpace() {
-    Device.Space(
+fun DeviceUtil.getSpace(): Device.Space {
+    return Device.Space(
         ram = getRam(activity),
         storage = getStorage(),
         sd = getSD(),

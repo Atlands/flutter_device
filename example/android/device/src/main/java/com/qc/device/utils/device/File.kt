@@ -12,22 +12,21 @@ import android.provider.MediaStore
 import androidx.core.content.ContextCompat
 import com.qc.device.model.Device
 import com.qc.device.utils.DeviceUtil
-import com.qc.device.utils.long
 import com.qc.device.utils.string
 import java.io.File
 
 
-fun DeviceUtil.getFiles(context: Context): Device.File? {
+fun DeviceUtil.getFiles(): Device.File {
     return Device.File(
-        imageInternal = getImagesInternal(context).size,
-        imageExternal = getImagesExternal(context).size,
-        audioInternal = getAudioInternal(context).size,
-        audioExternal = getAudioExternal(context).size,
-        videoInternal = getVideoInternal(context).size,
-        videoExternal = getVideoExternal(context).size,
+        imageInternal = getImagesInternal(activity).size,
+        imageExternal = getImagesExternal(activity).size,
+        audioInternal = getAudioInternal(activity).size,
+        audioExternal = getAudioExternal(activity).size,
+        videoInternal = getVideoInternal(activity).size,
+        videoExternal = getVideoExternal(activity).size,
         downloadInternal = 0,
-        downloadExternal = getDownloadFile(context).size,
-        contactGroup = getContactGroup(context)
+        downloadExternal = getDownloadFile(activity).size,
+        contactGroup = getContactGroup(activity)
     )
 }
 

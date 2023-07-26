@@ -9,7 +9,7 @@ class PackageUtil(private val context: Context) {
     /**
      * 查询已安装应用列表
      */
-    fun allPackages(): List<App> = try {
+    fun allPackages(): List<App> {
         val manager = context.packageManager
         val packages = try {
             manager.getInstalledPackages(0)
@@ -17,7 +17,7 @@ class PackageUtil(private val context: Context) {
             emptyList<PackageInfo>()
         }
 
-        packages.map {
+        return packages.map {
             val isSystem = (it.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM) == 1
             App(
                 name = try {
@@ -32,14 +32,11 @@ class PackageUtil(private val context: Context) {
                 } catch (_: Exception) {
                     0
                 },
-                isSystem = if(isSystem) 1 else 0,
-//                createdAt = it.firstInstallTime,
-//                updatedAt = it.lastUpdateTime
+                isSystem = if (isSystem) 1 else 0,
+                createdAt = it.firstInstallTime,
+                updatedAt = it.lastUpdateTime
             )
         }
-    } catch (e: Exception) {
-        e.printStackTrace()
-        emptyList()
     }
 
     fun getPackageInfo(): App {

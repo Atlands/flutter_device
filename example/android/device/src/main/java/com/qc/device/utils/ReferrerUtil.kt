@@ -1,56 +1,41 @@
 package com.qc.device.utils
 
-import android.content.Context
-import android.os.RemoteException
+import androidx.activity.ComponentActivity
 import com.android.installreferrer.api.InstallReferrerClient
 import com.android.installreferrer.api.InstallReferrerStateListener
-import com.android.installreferrer.api.ReferrerDetails
 import com.qc.device.model.Referrer
-import kotlinx.coroutines.CompletableDeferred
-import kotlinx.coroutines.withTimeout
 import java.util.Calendar
 import java.util.Date
+import com.qc.device.model.Result
+import com.qc.device.model.ResultError
 
-object ReferrerUtil {
-
+class ReferrerUtil(val activity: ComponentActivity) {
 
     /**
      * 安装信息
      */
-    suspend fun getReferrerDetails(context: Context): Referrer {
-        val deferredReferrerDetails = CompletableDeferred<ReferrerDetails?>()
-        val client = InstallReferrerClient.newBuilder(context.applicationContext).build()
+    fun getReferrerDetails(onResult: (Result<Referrer?>) -> Unit) {
+        val client = InstallReferrerClient.newBuilder(activity).build()
         client.startConnection(object : InstallReferrerStateListener {
             override fun onInstallReferrerSetupFinished(responseInt: Int) {
                 if (responseInt == InstallReferrerClient.InstallReferrerResponse.OK) {
-                    deferredReferrerDetails.complete(
-                        try {
-                            client.installReferrer
-                        } catch (e: RemoteException) {
-                            null
-                        }
+                    val referrer = Referrer(
+                        referrer = client.installReferrer?.installReferrer ?: "unknown",
+                        installDate = client.installReferrer?.installBeginTimestampSeconds?.let { seconds ->
+                            Calendar.getInstance()
+                                .apply { add(Calendar.SECOND, -seconds.toInt()) }.time.formatDate()
+                        } ?: Date().formatDate(),
                     )
+                    onResult(Result(ResultError.RESULT_OK, null, referrer))
                 } else {
-                    deferredReferrerDetails.complete(null)
+                    onResult(Result(ResultError.REFERRER_ERROR,"connect referrer server failed",null))
                 }
                 client.endConnection()
             }
 
             override fun onInstallReferrerServiceDisconnected() {
-                if (!deferredReferrerDetails.isCompleted) {
-                    deferredReferrerDetails.complete(null)
-                }
+                onResult(Result(ResultError.REFERRER_ERROR,"connect referrer server failed",null))
             }
         })
-
-        val detail = withTimeout(1000) { deferredReferrerDetails.await() }
-
-        return Referrer(
-            referrer = detail?.installReferrer ?: "unknown",
-            installDate = detail?.installBeginTimestampSeconds?.let { seconds ->
-                Calendar.getInstance()
-                    .apply { add(Calendar.SECOND, -seconds.toInt()) }.time.formatDate()
-            } ?: Date().formatDate(),
-        )
     }
 }

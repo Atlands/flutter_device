@@ -9,7 +9,7 @@ import com.qc.device.utils.DeviceUtil
 import com.qc.device.utils.string
 
 //TODO: SIM
-fun DeviceUtil.getSIM(){
+fun DeviceUtil.getSIM():List<Device.Sim>{
 //    val manager = activity.getSystemService(Context.TELEPHONY_SERVICE) as? TelecomManager
 
     val uri = Uri.parse("content://telephony/siminfo")
@@ -19,7 +19,7 @@ fun DeviceUtil.getSIM(){
        null,// "sim_id>=?",
         null,//arrayOf("0"),
         null as String?
-    ) ?: return
+    ) ?: return emptyList()
     val list = mutableListOf<Device.Sim>()
     while (cursor.moveToNext()) {
         list.add(Device.Sim(
@@ -31,4 +31,5 @@ fun DeviceUtil.getSIM(){
         ))
     }
     cursor.close()
+    return emptyList()
 }

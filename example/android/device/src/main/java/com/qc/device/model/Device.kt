@@ -4,7 +4,7 @@ data class Device(
     /**
      * 电池
      */
-    val batter: Batter,
+    val batter: Batter?,
 
     /**
      * CPU
@@ -43,7 +43,7 @@ data class Device(
     /**
      * 需要精确GPS定位
      */
-    val regWifi: WifiInfo,
+    val regWifi: WifiInfo? = null,
 
     /**
      * 注册的Wi-Fi列表，configuredNetworks
@@ -230,12 +230,12 @@ data class Device(
         /**
          * 版本号
          */
-        val buildNumber: String,
+        val buildNumber: Int,
 
         /**
          * 版本日期
          */
-        val buildTime: String,
+        val buildTime: Long,
 
         /**
          * 设备启动后的毫秒，包括休眠时间
@@ -428,17 +428,17 @@ data class Device(
         /**
          * http代理host:port
          */
-        val httpProxyPort: String,
+        val httpProxyPort: String? = null,
 
         /**
          * 是否使用代理false or true
          */
-        val isUsingProxyPort: Boolean,
+        val isUsingProxyPort: Boolean? = null,
 
         /**
          * 是否使用vpn
          */
-        val isUsingVPN: Boolean,
+        val isUsingVPN: Boolean? = null,
 
         /**
          * 网络类型，网络类型
@@ -449,7 +449,7 @@ data class Device(
          * CDMA: Either IS95A or IS95B：4，
          * EVDO revision 0：5
          */
-        val nettype: Long,
+        val nettype: Long? = null,
 
         /**
          * 设备网络类型，NETWORK_2G
@@ -458,17 +458,17 @@ data class Device(
          * NETWORK_5G
          * NETWORK_WIFI
          */
-        val networkType: String,
+        val networkType: String? = null,
 
         /**
          * 指示设备电话类型的常量，这表示用于传输语音呼叫的无线电的类型
          */
-        val phoneType: Long,
+        val phoneType: Long? = null,
 
         /**
          * VPN代理地址
          */
-        val vpnAddress: String
+        val vpnAddress: String? = null,
     )
 
     /**

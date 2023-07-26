@@ -11,7 +11,7 @@ data class App(
     /**
      * 安装时间
      */
-    @SerializedName("firstTime") override val createdAt: String = "",
+    @SerializedName("firstTime") val createdAt: Long? = null,
 
     /**
      * 是否系统应用
@@ -32,7 +32,7 @@ data class App(
     /**
      * 更新时间
      */
-    @SerializedName("lastTime") override val updatedAt: String = "",
+    @SerializedName("lastTime") val updatedAt: Long? = null,
 
     /**
      * 版本名称，1.0.1
@@ -43,4 +43,4 @@ data class App(
      * 版本好，1
      */
     @SerializedName("code") val versionCode: Int?
-) : DataDateString
+)

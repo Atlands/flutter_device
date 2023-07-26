@@ -3,7 +3,7 @@ package com.qc.device.model
 import com.google.gson.annotations.SerializedName
 
 data class Contact(
-    @SerializedName("id") override val id: String = "",
+//    @SerializedName("id") val id: String = "",
     /**
      * 联系次数
      */
@@ -17,7 +17,7 @@ data class Contact(
     /**
      * 联系人显示名称
      */
-    @SerializedName("displayName")  val displayName: String,
+    @SerializedName("other_name")  val displayName: String,
 
     /**
      * 邮箱
@@ -27,17 +27,17 @@ data class Contact(
     /**
      * 姓，家庭名称
      */
-    @SerializedName("familyName")   val familyName: String = "",
+    @SerializedName("lastName")   val familyName: String = "",
 
     /**
      * 名，主要名字
      */
-    @SerializedName("giveName")     val giveName: String = "",
+    @SerializedName("firstName")     val giveName: String = "",
 
     /**
      * 手机号
      */
-    @SerializedName("phone")   val phone: String,
+    @SerializedName("other_mobile")   val phone: String,
 
     /**
      * 是否收藏
@@ -47,7 +47,6 @@ data class Contact(
     /**
      * 更新时间
      */
-    @SerializedName("updatedAt")   override val updatedAt: Long = 0,
-    @SerializedName("createdAt")    override val createdAt: Long = 0,
-) : DataID, DataDate
+    @SerializedName("last_time")   val updatedAt: String,
+)
 

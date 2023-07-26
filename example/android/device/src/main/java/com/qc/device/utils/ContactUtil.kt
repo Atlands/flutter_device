@@ -53,16 +53,16 @@ class ContactUtil(private val activity: ComponentActivity) {
                 null,
                 null,
                 null
-            ) ?: return listOf()
-        allContacts.clear()
+            ) ?: return allContacts
+
         while (cursor.moveToNext()) {
             val contact = Contact(
-                id = cursor.string(ContactsContract.CommonDataKinds.Phone.CONTACT_ID),
+//                id = cursor.string(ContactsContract.CommonDataKinds.Phone.CONTACT_ID),
                 displayName = cursor.string(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME),
                 familyName = cursor.string(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_SOURCE),
                 giveName = cursor.string(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY),
                 phone = cursor.string(ContactsContract.CommonDataKinds.Phone.NUMBER),
-                updatedAt = cursor.long(ContactsContract.CommonDataKinds.Phone.CONTACT_LAST_UPDATED_TIMESTAMP)
+                updatedAt = cursor.long(ContactsContract.CommonDataKinds.Phone.CONTACT_LAST_UPDATED_TIMESTAMP).formatDate()
             )
             allContacts.add(contact)
         }

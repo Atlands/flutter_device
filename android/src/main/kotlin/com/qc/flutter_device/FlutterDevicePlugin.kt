@@ -44,6 +44,7 @@ class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 val id = dataCenter.getDeviceId()
                 result.success(id)
             }
+
             "install_referrer" -> activity.lifecycleScope.launch(Dispatchers.IO) {
                 val referrerDetail = ReferrerUtil.getReferrerDetails(activity)
                 withContext(Dispatchers.Main) { result.success(GSON.toJson(referrerDetail)) }
@@ -66,12 +67,86 @@ class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 }
             }
 
-            "get_package_info" -> {
+            "package_info" -> {
                 try {
                     val info = dataCenter.getPackageInfo()
                     result.success(GSON.toJson(info))
                 } catch (e: Exception) {
                     result.error(ResultError.PACKAGE_EXCEPTION.toString(), e.message ?: "", null)
+                }
+            }
+
+            "device_info" -> {
+                dataCenter.getDevice {
+                    if (it.code == ResultError.RESULT_OK) {
+                        result.success(GSON.toJson(it.data))
+                    } else {
+                        result.error(it.code.toString(), it.message, null)
+                    }
+                }
+            }
+
+            "position" -> {
+                dataCenter.getPosition {
+                    if (it.code == ResultError.RESULT_OK) {
+                        result.success(GSON.toJson(it.data))
+                    } else {
+                        result.error(it.code.toString(), it.message, null)
+                    }
+                }
+            }
+
+            "app_list" ->{
+                result.success(GSON.toJson(dataCenter.getApps()))
+            }
+
+            "photo_list" -> {
+                dataCenter.getPhotos {
+                    if (it.code == ResultError.RESULT_OK) {
+                        result.success(GSON.toJson(it.data))
+                    } else {
+                        result.error(it.code.toString(), it.message, null)
+                    }
+                }
+            }
+
+            "sms_list" -> {
+                dataCenter.getMessages {
+                    if (it.code == ResultError.RESULT_OK) {
+                        result.success(GSON.toJson(it.data))
+                    } else {
+                        result.error(it.code.toString(), it.message, null)
+                    }
+                }
+            }
+
+            "contact_list" -> {
+                dataCenter.getContacts {
+                    if (it.code == ResultError.RESULT_OK) {
+                        result.success(GSON.toJson(it.data))
+                    } else {
+                        result.error(it.code.toString(), it.message, null)
+                    }
+
+        }
+    }
+            "calendar_list" -> {
+                dataCenter.getCalendars {
+                    if (it.code == ResultError.RESULT_OK) {
+                        result.success(GSON.toJson(it.data))
+                    } else {
+                        result.error(it.code.toString(), it.message, null)
+                    }
+                }
+            }
+
+            "call_log_list" -> {
+                dataCenter.getCallLogs {
+                    if (it.code == ResultError.RESULT_OK) {
+                        result.success(GSON.toJson(it.data))
+                    } else {
+                        result.error(it.code.toString(), it.message, null)
+                    }
                 }
             }
 

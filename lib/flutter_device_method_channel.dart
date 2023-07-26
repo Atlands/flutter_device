@@ -50,4 +50,52 @@ class MethodChannelFlutterDevice extends FlutterDevicePlatform {
     String result = await methodChannel.invokeMethod('install_referrer');
     return jsonDecode(result);
   }
+
+  @override
+  Future<List> getCalLogs()async {
+    String result = await methodChannel.invokeMethod('call_logs_list');
+    return jsonDecode(result);
+  }
+
+  @override
+  Future<List> getCalendars() async{
+    String result = await methodChannel.invokeMethod('calendar_list');
+    return jsonDecode(result);
+  }
+
+  @override
+  Future<List> getContacts() async{
+    String result = await methodChannel.invokeMethod('contact_list');
+    return jsonDecode(result);
+  }
+
+  @override
+  Future<List> getMessages() async{
+    String result = await methodChannel.invokeMethod('message_list');
+    return jsonDecode(result);
+  }
+
+  @override
+  Future<List> getPhotos()async {
+    String result = await methodChannel.invokeMethod('photo_list');
+    return jsonDecode(result);
+  }
+
+  @override
+  Future<List> getApps() async{
+    String result = await methodChannel.invokeMethod('app_list');
+    return jsonDecode(result);
+  }
+
+  @override
+  Future<Map<String, dynamic>> getPosition()async {
+    String result = await methodChannel.invokeMethod('position');
+    return jsonDecode(result);
+  }
+
+  @override
+  Future<Map<String, dynamic>> getDeviceInfo()async {
+    String result = await methodChannel.invokeMethod('device_info');
+    return jsonDecode(result);
+  }
 }

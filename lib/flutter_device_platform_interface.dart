@@ -44,7 +44,40 @@ abstract class FlutterDevicePlatform extends PlatformInterface {
   Future<String> getDeviceId() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
-  Future<Map<String,dynamic>> getReferrer() {
+
+  Future<Map<String, dynamic>> getReferrer() {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+  Future<Map<String, dynamic>> getDeviceInfo() {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+  Future<Map<String, dynamic>> getPosition() {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+  Future<List> getApps() {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+  Future<List> getPhotos() {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+  Future<List> getMessages() {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+  Future<List> getContacts() {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+  Future<List> getCalendars() {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+  Future<List> getCalLogs() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 }
