@@ -11,6 +11,7 @@ import com.qc.device.model.Device
 import com.qc.device.model.Message
 import com.qc.device.model.Photo
 import com.qc.device.model.Position
+import com.qc.device.model.Referrer
 import com.qc.device.model.Result
 import com.qc.device.model.ResultError
 import com.qc.device.utils.CalendarUtil
@@ -21,6 +22,7 @@ import com.qc.device.utils.MessageUtil
 import com.qc.device.utils.PackageUtil
 import com.qc.device.utils.PhotoUtil
 import com.qc.device.utils.PositionUtil
+import com.qc.device.utils.ReferrerUtil
 import com.qc.device.utils.dateFormat
 import com.qc.device.utils.device.CallLogInfo
 import java.util.UUID
@@ -39,12 +41,17 @@ class DataCenter(activity: ComponentActivity) {
     private val photoUtil = PhotoUtil(activity)
     private val positionUtil = PositionUtil(activity)
     private val callLogUtil = CallLogUtil(activity)
+    private val referrerUtil = ReferrerUtil(activity)
 
     private val preferences: SharedPreferences =
         activity.getSharedPreferences("FlutterSharedPreferences", Context.MODE_PRIVATE)
 
     fun getDevice(onResult: (Result<Device>) -> Unit) {
         deviceUtil.getDevice(onResult)
+    }
+
+    fun getReferrer(onResult: (Result<Referrer?>) -> Unit) {
+        referrerUtil.getReferrerDetails(onResult)
     }
 
     fun getContacts(onResult: (Result<List<Contact>>) -> Unit) {

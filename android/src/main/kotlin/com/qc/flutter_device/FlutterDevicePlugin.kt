@@ -2,12 +2,9 @@ package com.qc.flutter_device
 
 import androidx.activity.ComponentActivity
 import androidx.annotation.NonNull
-import androidx.lifecycle.lifecycleScope
 import com.google.gson.Gson
 import com.qc.device.DataCenter
 import com.qc.device.model.ResultError
-import com.qc.device.utils.ReferrerUtil
-
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -15,9 +12,6 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 /** FlutterDevicePlugin */
 class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
@@ -45,9 +39,14 @@ class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 result.success(id)
             }
 
-            "install_referrer" -> activity.lifecycleScope.launch(Dispatchers.IO) {
-                val referrerDetail = ReferrerUtil.getReferrerDetails(activity)
-                withContext(Dispatchers.Main) { result.success(GSON.toJson(referrerDetail)) }
+            "install_referrer" -> {
+                dataCenter.getReferrer {
+                    if (it.code == ResultError.RESULT_OK) {
+                        result.success(GSON.toJson(it.data))
+                    } else {
+                        result.error(it.code.toString(), it.message, null)
+                    }
+                }
             }
 
             "contact_picker" -> {
@@ -96,7 +95,7 @@ class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 }
             }
 
-            "app_list" ->{
+            "app_list" -> {
                 result.success(GSON.toJson(dataCenter.getApps()))
             }
 
@@ -128,8 +127,9 @@ class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                         result.error(it.code.toString(), it.message, null)
                     }
 
-        }
-    }
+                }
+            }
+
             "calendar_list" -> {
                 dataCenter.getCalendars {
                     if (it.code == ResultError.RESULT_OK) {
