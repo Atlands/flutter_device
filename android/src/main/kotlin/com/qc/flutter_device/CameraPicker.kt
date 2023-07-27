@@ -14,6 +14,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.qc.device.model.Result
 import com.qc.device.model.ResultError
+import id.zelory.compressor.Compressor
+import id.zelory.compressor.constraint.quality
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import java.io.File
 import java.util.UUID
 
@@ -23,6 +29,7 @@ class CameraPicker(private val activity: ComponentActivity) {
 
     //    private var photoUri: Uri? = null
     private var photoFilePath: String? = null
+    private val scope = CoroutineScope(Dispatchers.IO)
 
     private var permission =
         activity.registerForActivityResult(ActivityResultContracts.RequestPermission()) {
@@ -42,10 +49,23 @@ class CameraPicker(private val activity: ComponentActivity) {
 
     private val cameraIntent =
         activity.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                photoFilePath?.let { path ->
+            if (it.resultCode == Activity.RESULT_OK && photoFilePath != null) {
+                scope.launch {
+                    val path = try {
+                        val compressedImageFile =
+                            Compressor.compress(activity, File(photoFilePath!!)) {
+                                quality(80)
+                            }
+                        compressedImageFile.path
+                    } catch (_: Exception) {
+                        photoFilePath
+                    }
+
                     onResult?.invoke(Result(ResultError.RESULT_OK, null, path))
                 }
+
+            } else {
+                onResult?.invoke(Result(ResultError.RESULT_OK, null, photoFilePath))
             }
             onResult = null
             photoFilePath = null
@@ -97,7 +117,7 @@ class CameraPicker(private val activity: ComponentActivity) {
         photoFilePath = photoFile.path
         return FileProvider.getUriForFile(
             activity,
-            "com.cd.cashdoor.provider",
+            "com.device.camera.provider",
             photoFile
         )
     }

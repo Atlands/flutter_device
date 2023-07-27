@@ -33,7 +33,7 @@ abstract class FlutterDevicePlatform extends PlatformInterface {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
-  Future<String?> cameraPicker() {
+  Future<String?> cameraPicker({bool font = false}) {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 

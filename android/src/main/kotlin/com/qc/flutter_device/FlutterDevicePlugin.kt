@@ -59,7 +59,7 @@ class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 val font = call.arguments as? Boolean ?: false
                 cameraPicker.picker(font) {
                     if (it.code == ResultError.RESULT_OK) {
-                        result.success(GSON.toJson(it.data))
+                        result.success(it.data)
                     } else {
                         result.error(it.code.toString(), it.message, null)
                     }

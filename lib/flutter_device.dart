@@ -12,8 +12,8 @@ class FlutterDevice {
   }
 
   ///注意有异常抛出，例如没有权限
-  static Future<String?> cameraPicker() {
-    return FlutterDevicePlatform.instance.cameraPicker();
+  static Future<String?> cameraPicker({bool font = false}) {
+    return FlutterDevicePlatform.instance.cameraPicker(font: font);
   }
 
   ///Throw
