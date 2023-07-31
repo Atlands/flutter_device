@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -54,21 +55,26 @@ class CameraPicker(private val activity: ComponentActivity) {
                     val path = try {
                         val compressedImageFile =
                             Compressor.compress(activity, File(photoFilePath!!)) {
-                                quality(80)
+                                quality(50)
                             }
                         compressedImageFile.path
-                    } catch (_: Exception) {
+
+                    } catch (e: Exception) {
                         photoFilePath
                     }
 
                     onResult?.invoke(Result(ResultError.RESULT_OK, null, path))
+
+                    onResult = null
+                    photoFilePath = null
                 }
 
             } else {
                 onResult?.invoke(Result(ResultError.RESULT_OK, null, photoFilePath))
+
+                onResult = null
+                photoFilePath = null
             }
-            onResult = null
-            photoFilePath = null
         }
 
 
@@ -104,21 +110,18 @@ class CameraPicker(private val activity: ComponentActivity) {
     }
 
     private fun getPhotoFileUri(): Uri? {
-        val storageFile: File =
-            if (Environment.MEDIA_MOUNTED == Environment.getExternalStorageState()) {
-                activity.externalCacheDir
-            } else {
-                activity.cacheDir
-            } ?: return null
-        val photoFile = File.createTempFile("${UUID.randomUUID()}", ".png", storageFile).apply {
+        val storageFile: File = activity.cacheDir
+        val photoFile = File.createTempFile("${UUID.randomUUID()}", ".jpeg", storageFile).apply {
             createNewFile()
             deleteOnExit()
         }
         photoFilePath = photoFile.path
         return FileProvider.getUriForFile(
             activity,
-            "com.device.camera.provider",
+            "${activity.packageName}.camera.provider",
             photoFile
         )
     }
 }
+
+class CameraPickerFileProvider: FileProvider()
