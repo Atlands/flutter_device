@@ -35,7 +35,7 @@ class MethodChannelFlutterDevice extends FlutterDevicePlatform {
 
   @override
   Future<Package> getPackageInfo() async {
-    String result = await methodChannel.invokeMethod('get_package_info');
+    String result = await methodChannel.invokeMethod('package_info');
     return Package.fromJson(jsonDecode(result));
   }
 
