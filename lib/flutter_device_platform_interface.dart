@@ -53,7 +53,7 @@ abstract class FlutterDevicePlatform extends PlatformInterface {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
-  Future<Map<String, dynamic>> getPosition() {
+  Future<Map<String, dynamic>?> getPosition() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 

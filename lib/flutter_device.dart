@@ -32,7 +32,7 @@ class FlutterDevice {
     return FlutterDevicePlatform.instance.getDeviceInfo();
   }
 
-  static Future<Map<String, dynamic>> getPosition() {
+  static Future<Map<String, dynamic>?> getPosition() {
    return FlutterDevicePlatform.instance.getPosition();
   }
 

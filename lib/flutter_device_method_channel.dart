@@ -88,7 +88,7 @@ class MethodChannelFlutterDevice extends FlutterDevicePlatform {
   }
 
   @override
-  Future<Map<String, dynamic>> getPosition()async {
+  Future<Map<String, dynamic>?> getPosition()async {
     String result = await methodChannel.invokeMethod('position');
     return jsonDecode(result);
   }
