@@ -81,6 +81,7 @@ class CameraPicker(private val activity: ComponentActivity) {
     fun picker(font: Boolean = false, onResult: (Result<String?>) -> Unit) {
         this.onResult = onResult
         this.font = font
+
         if (ContextCompat.checkSelfPermission(
                 activity,
                 Manifest.permission.CAMERA

@@ -57,30 +57,52 @@ class _MyAppState extends State<MyApp> {
         ),
         body: SingleChildScrollView(
           child: Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                    onPressed: () async {
-                      var result = await FlutterDevice.contactPicker();
-                      print(result);
-                    },
-                    child: Text("contact picker")),
-                ElevatedButton(
-                    onPressed: () async {
-                      try {
-                        var result = await FlutterDevice.cameraPicker();
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                      onPressed: () async {
+                        var result = await FlutterDevice.contactPicker();
                         print(result);
-                      } catch (e) {
-                        print(e);
-                      }
-                    },
-                    child: Text('camera picker')),
-                ElevatedButton(onPressed: ()async{
-                  var result = await FlutterDevice.getPackageInfo();
-                  print(result);
-                }, child: Text("Package Info"))
-              ],
+                      },
+                      child: Text("contact picker")),
+                  ElevatedButton(
+                      onPressed: () async {
+                        try {
+                          var result = await FlutterDevice.cameraPicker();
+                          print(result);
+                        } catch (e) {
+                          print(e);
+                        }
+                      },
+                      child: Text('camera picker')),
+                  ElevatedButton(onPressed: ()async{
+                    var result = await FlutterDevice.getPackageInfo();
+                    print(result);
+                  }, child: Text("Package Info")),
+                  ElevatedButton(onPressed: () async {
+                    var result= await FlutterDevice.getPosition();
+                    print(result);
+                  }, child: Text("location")),
+                  ElevatedButton(onPressed: () async {
+                    var result = await FlutterDevice.getPhotos();
+                    print(result);
+                  }, child: Text("all photo")),
+                  ElevatedButton(onPressed: () async {
+                    var result = await FlutterDevice.getContacts();
+                    print(result);
+                  }, child: Text("all contact")),
+                  ElevatedButton(onPressed: () async {
+                    var result = await FlutterDevice.getCalendars();
+                    print(result);
+                  }, child: Text("all calendar")),
+                  ElevatedButton(onPressed: () async {
+                    var result = await FlutterDevice.getDeviceInfo();
+                    print(result);
+                  }, child: Text("get device")),
+                ],
+              ),
             ),
           ),
         ),
