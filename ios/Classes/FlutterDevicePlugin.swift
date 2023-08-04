@@ -22,7 +22,7 @@ public class FlutterDevicePlugin: NSObject, FlutterPlugin {
         case "device_id":
             let id = deviceUtil.getDeviceId()
             result(id)
-        case "referrer":
+        case "install_referrer":
             result(deviceUtil.getReferrer())
         case "device_info":
             let data = getJsonString(from: deviceUtil.getDevice())
