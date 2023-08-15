@@ -80,4 +80,8 @@ abstract class FlutterDevicePlatform extends PlatformInterface {
   Future<List> getCalLogs() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
+
+  Future<bool> savePreferences(Map<String,dynamic> map) {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
 }

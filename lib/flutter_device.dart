@@ -28,15 +28,16 @@ class FlutterDevice {
   static Future<Map<String, dynamic>> getReferrer() {
     return FlutterDevicePlatform.instance.getReferrer();
   }
+
   static Future<Map<String, dynamic>> getDeviceInfo() {
     return FlutterDevicePlatform.instance.getDeviceInfo();
   }
 
   static Future<Map<String, dynamic>?> getPosition() {
-   return FlutterDevicePlatform.instance.getPosition();
+    return FlutterDevicePlatform.instance.getPosition();
   }
 
-  static  Future<List> getApps() {
+  static Future<List> getApps() {
     return FlutterDevicePlatform.instance.getApps();
   }
 
@@ -58,5 +59,9 @@ class FlutterDevice {
 
   static Future<List> getCalLogs() {
     return FlutterDevicePlatform.instance.getCalLogs();
+  }
+
+  static savePreferences(Map<String, dynamic> map) {
+    FlutterDevicePlatform.instance.savePreferences(map);
   }
 }

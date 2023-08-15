@@ -3,6 +3,7 @@ package com.qc.flutter_device
 import androidx.activity.ComponentActivity
 import androidx.annotation.NonNull
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.qc.device.DataCenter
 import com.qc.device.model.ResultError
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -12,6 +13,7 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
+import org.json.JSONObject
 
 /** FlutterDevicePlugin */
 class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
@@ -148,6 +150,13 @@ class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                         result.error(it.code.toString(), it.message, null)
                     }
                 }
+            }
+
+            "save_preferences" -> {
+                val map =
+                    Gson().fromJson<Map<String, Any>>(call.arguments as String, Map::class.java)
+                dataCenter.savePreferences(map)
+                result.success(true)
             }
 
             else -> result.notImplemented()
