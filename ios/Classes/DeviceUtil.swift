@@ -48,9 +48,9 @@ class DeviceUtil {
         
 //        return PackInfo(name: appName, packageName: packageName, versionCode: version)
         let map = [
-            "name": appName,
+            "appName": appName,
             "packageName": packageName,
-            "versionCode": version
+            "version": version
         ]
         
         return dictToJson(dict: map) ?? "{}"
