@@ -17,6 +17,7 @@ import com.qc.device.model.Result
 import com.qc.device.model.ResultError
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.quality
+import id.zelory.compressor.constraint.size
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
