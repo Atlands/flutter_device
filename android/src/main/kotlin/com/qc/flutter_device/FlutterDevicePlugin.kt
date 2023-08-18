@@ -153,9 +153,10 @@ class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             }
 
             "save_preferences" -> {
-                val map =
-                    Gson().fromJson<Map<String, Any>>(call.arguments as String, Map::class.java)
-                dataCenter.savePreferences(map)
+//                val map =
+//                    Gson().fromJson<Map<String, Any>>(call.arguments as String, Map::class.java)
+                @Suppress("UNCHECKED_CAST")
+                dataCenter.savePreferences(call.arguments as Map<String, Any>)
                 result.success(true)
             }
 

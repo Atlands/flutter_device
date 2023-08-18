@@ -109,6 +109,13 @@ class _MyAppState extends State<MyApp> {
                         print(result);
                       },
                       child: Text("get sms")),
+                  ElevatedButton(
+                      onPressed: () async {
+                        var st = {"sms": "2019-06-14 13:39:08"};
+                        var result = await FlutterDevice.savePreferences(st);
+                        print(result);
+                      },
+                      child: Text("save preference")),
                 ],
               ),
             ),

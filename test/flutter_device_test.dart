@@ -1,9 +1,9 @@
+import 'package:flutter_device/flutter_device.dart';
+import 'package:flutter_device/flutter_device_method_channel.dart';
+import 'package:flutter_device/flutter_device_platform_interface.dart';
 import 'package:flutter_device/model/contact.dart';
 import 'package:flutter_device/model/package.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_device/flutter_device.dart';
-import 'package:flutter_device/flutter_device_platform_interface.dart';
-import 'package:flutter_device/flutter_device_method_channel.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 class MockFlutterDevicePlatform
@@ -110,6 +110,5 @@ void main() {
     MockFlutterDevicePlatform fakePlatform = MockFlutterDevicePlatform();
     FlutterDevicePlatform.instance = fakePlatform;
 
-    expect(await FlutterDevice.getPlatformVersion(), '42');
   });
 }

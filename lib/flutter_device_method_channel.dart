@@ -14,13 +14,6 @@ class MethodChannelFlutterDevice extends FlutterDevicePlatform {
   final methodChannel = const MethodChannel('flutter_device');
 
   @override
-  Future<String?> getPlatformVersion() async {
-    final version =
-        await methodChannel.invokeMethod<String>('getPlatformVersion');
-    return version;
-  }
-
-  @override
   Future<Contact?> contactPicker() async {
     String? result = await methodChannel.invokeMethod('contact_picker');
     if (result == null) return null;
@@ -100,8 +93,8 @@ class MethodChannelFlutterDevice extends FlutterDevicePlatform {
   }
 
   @override
-  Future<bool> savePreferences(Map<String, dynamic> map) {
-    methodChannel.invokeMethod('save_preferences');
-    return super.savePreferences(map);
+  Future<bool> savePreferences(Map<String, dynamic> map) async {
+    await methodChannel.invokeMethod('save_preferences', map);
+    return true;
   }
 }

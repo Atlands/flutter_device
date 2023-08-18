@@ -3,10 +3,6 @@ import 'model/contact.dart';
 import 'model/package.dart';
 
 class FlutterDevice {
-  static Future<String?> getPlatformVersion() {
-    return FlutterDevicePlatform.instance.getPlatformVersion();
-  }
-
   static Future<Contact?> contactPicker() {
     return FlutterDevicePlatform.instance.contactPicker();
   }
@@ -62,6 +58,6 @@ class FlutterDevice {
   }
 
   static savePreferences(Map<String, dynamic> map) {
-    FlutterDevicePlatform.instance.savePreferences(map);
+    return FlutterDevicePlatform.instance.savePreferences(map);
   }
 }
