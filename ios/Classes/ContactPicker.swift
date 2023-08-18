@@ -29,8 +29,8 @@ class ContactPicker: NSObject, CNContactPickerDelegate{
 //            phone: contact.phoneNumbers.first(where: { !$0.value.stringValue.trimmingCharacters(in: .whitespaces).isEmpty })?.value.stringValue ?? "")
         
         let map = [
-            "displayName": [contact.givenName, contact.middleName, contact.familyName].filter{!$0.isEmpty}.joined(separator: " "),
-            "phone": contact.phoneNumbers.first(where: { !$0.value.stringValue.trimmingCharacters(in: .whitespaces).isEmpty })?.value.stringValue ?? ""
+            "other_name": [contact.givenName, contact.middleName, contact.familyName].filter{!$0.isEmpty}.joined(separator: " "),
+            "other_mobile": contact.phoneNumbers.first(where: { !$0.value.stringValue.trimmingCharacters(in: .whitespaces).isEmpty })?.value.stringValue ?? ""
         ]
         self.onResult?(Result(code: ResultError.resultOK, message: nil, data: getJsonString(from: map)))
         self.onResult = nil
