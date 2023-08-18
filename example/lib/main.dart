@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-
-import 'package:flutter/services.dart';
 import 'package:flutter_device/flutter_device.dart';
 
 void main() {
@@ -91,16 +88,27 @@ class _MyAppState extends State<MyApp> {
                   }, child: Text("all photo")),
                   ElevatedButton(onPressed: () async {
                     var result = await FlutterDevice.getContacts();
-                    print(result);
-                  }, child: Text("all contact")),
-                  ElevatedButton(onPressed: () async {
-                    var result = await FlutterDevice.getCalendars();
-                    print(result);
-                  }, child: Text("all calendar")),
-                  ElevatedButton(onPressed: () async {
-                    var result = await FlutterDevice.getDeviceInfo();
-                    print(result);
-                  }, child: Text("get device")),
+                        print(result);
+                      },
+                      child: Text("all contact")),
+                  ElevatedButton(
+                      onPressed: () async {
+                        var result = await FlutterDevice.getCalendars();
+                        print(result);
+                      },
+                      child: Text("all calendar")),
+                  ElevatedButton(
+                      onPressed: () async {
+                        var result = await FlutterDevice.getDeviceInfo();
+                        print(result);
+                      },
+                      child: Text("get device")),
+                  ElevatedButton(
+                      onPressed: () async {
+                        var result = await FlutterDevice.getMessages();
+                        print(result);
+                      },
+                      child: Text("get sms")),
                 ],
               ),
             ),

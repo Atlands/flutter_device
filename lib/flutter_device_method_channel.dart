@@ -71,7 +71,7 @@ class MethodChannelFlutterDevice extends FlutterDevicePlatform {
 
   @override
   Future<List> getMessages() async {
-    String result = await methodChannel.invokeMethod('message_list');
+    String result = await methodChannel.invokeMethod('sms_list');
     return jsonDecode(result);
   }
 
