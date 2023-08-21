@@ -1,9 +1,7 @@
 package com.qc.flutter_device
 
 import androidx.activity.ComponentActivity
-import androidx.annotation.NonNull
 import com.google.gson.Gson
-import com.google.gson.JsonObject
 import com.qc.device.DataCenter
 import com.qc.device.model.ResultError
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -13,7 +11,6 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-import org.json.JSONObject
 
 /** FlutterDevicePlugin */
 class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
@@ -29,12 +26,12 @@ class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private var GSON = Gson()
 
-    override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+    override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "flutter_device")
         channel.setMethodCallHandler(this)
     }
 
-    override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
+    override fun onMethodCall(call: MethodCall, result: Result) {
         when (call.method) {
             "device_id" -> {
                 val id = dataCenter.getDeviceId()
@@ -153,18 +150,22 @@ class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             }
 
             "save_preferences" -> {
-//                val map =
-//                    Gson().fromJson<Map<String, Any>>(call.arguments as String, Map::class.java)
                 @Suppress("UNCHECKED_CAST")
                 dataCenter.savePreferences(call.arguments as Map<String, Any>)
                 result.success(true)
             }
 
+            "clean_preferences" -> {
+                dataCenter.cleanPreferences()
+                result.success(true)
+            }
+
+
             else -> result.notImplemented()
         }
     }
 
-    override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+    override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
     }
 

@@ -67,7 +67,8 @@ class _MyAppState extends State<MyApp> {
                   ElevatedButton(
                       onPressed: () async {
                         try {
-                          var result = await FlutterDevice.cameraPicker();
+                          var result =
+                              await FlutterDevice.cameraPicker(font: true);
                           print(result);
                         } catch (e) {
                           print(e);
@@ -116,6 +117,12 @@ class _MyAppState extends State<MyApp> {
                         print(result);
                       },
                       child: Text("save preference")),
+                  ElevatedButton(
+                      onPressed: () async {
+                        var result = await FlutterDevice.cleanPreferences();
+                        print(result);
+                      },
+                      child: Text("clean preference")),
                 ],
               ),
             ),

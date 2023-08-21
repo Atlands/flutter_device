@@ -96,6 +96,12 @@ class MockFlutterDevicePlatform
     // TODO: implement cameraPicker
     throw UnimplementedError();
   }
+
+  @override
+  Future<bool> cleanPreferences() {
+    // TODO: implement cleanPreferences
+    throw UnimplementedError();
+  }
 }
 
 void main() {

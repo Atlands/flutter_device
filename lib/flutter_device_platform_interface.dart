@@ -77,7 +77,11 @@ abstract class FlutterDevicePlatform extends PlatformInterface {
     throw UnimplementedError('getCalLogs() has not been implemented.');
   }
 
-  Future<bool> savePreferences(Map<String,dynamic> map) {
+  Future<bool> savePreferences(Map<String, dynamic> map) {
     throw UnimplementedError('savePreferences() has not been implemented.');
+  }
+
+  Future<bool> cleanPreferences() {
+    throw UnimplementedError('cleanPreferences() has not been implemented.');
   }
 }

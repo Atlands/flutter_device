@@ -52,7 +52,7 @@ android {
         testImplementation 'org.mockito:mockito-core:5.1.1'
 //        implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
 //        implementation project(":device")
-        implementation("com.github.Helios030:DeviceInfo:1.1.5")
+        implementation("com.github.Helios030:DeviceInfo:1.1.6")
         implementation 'id.zelory:compressor:3.0.1'
     }
 

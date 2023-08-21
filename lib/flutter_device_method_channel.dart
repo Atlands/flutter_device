@@ -22,7 +22,7 @@ class MethodChannelFlutterDevice extends FlutterDevicePlatform {
 
   @override
   Future<String?> cameraPicker({bool font = false}) async {
-    String? result = await methodChannel.invokeMethod('camera_picker');
+    String? result = await methodChannel.invokeMethod('camera_picker', font);
     return result;
   }
 
@@ -95,6 +95,12 @@ class MethodChannelFlutterDevice extends FlutterDevicePlatform {
   @override
   Future<bool> savePreferences(Map<String, dynamic> map) async {
     await methodChannel.invokeMethod('save_preferences', map);
+    return true;
+  }
+
+  @override
+  Future<bool> cleanPreferences() async {
+    await methodChannel.invokeMethod('clean_preferences');
     return true;
   }
 }

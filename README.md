@@ -34,6 +34,7 @@ Future<Package> getPackageInfo()
 
 Future<String> getDeviceId()
 
+////抛异常
 Future<Map<String, dynamic>> getReferrer()
 
 Future<Map<String, dynamic>> getDeviceInfo()
@@ -60,7 +61,14 @@ Future<List> getCalendars()
 Future<List> getCalLogs()
 
 // 保存上传标记
-savePreferences(Map<String, dynamic> map) 
+savePreferences(Map<String, dynamic> map
+)
+
+
+// 移除上传标记（登出）
+cleanPreferences
+(
+)
 
 ```
 

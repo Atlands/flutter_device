@@ -60,4 +60,8 @@ class FlutterDevice {
   static savePreferences(Map<String, dynamic> map) {
     return FlutterDevicePlatform.instance.savePreferences(map);
   }
+
+  static cleanPreferences() {
+    return FlutterDevicePlatform.instance.cleanPreferences();
+  }
 }
