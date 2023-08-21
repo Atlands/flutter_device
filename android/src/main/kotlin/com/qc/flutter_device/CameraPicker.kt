@@ -72,7 +72,7 @@ class CameraPicker(private val activity: ComponentActivity) {
                 }
 
             } else {
-                onResult?.invoke(Result(ResultError.RESULT_OK, null, photoFilePath))
+                onResult?.invoke(Result(ResultError.RESULT_OK, null, null))
 
                 onResult = null
                 photoFilePath = null
@@ -127,4 +127,4 @@ class CameraPicker(private val activity: ComponentActivity) {
     }
 }
 
-class CameraPickerFileProvider: FileProvider()
+class CameraPickerFileProvider : FileProvider()
