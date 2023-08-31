@@ -56,8 +56,7 @@ class CameraPicker(private val activity: ComponentActivity) {
                     val path = try {
                         val compressedImageFile =
                             Compressor.compress(activity, File(photoFilePath!!)) {
-                                quality(40)
-                                size(204800)
+                                size(819200)
                             }
                         compressedImageFile.path
 
