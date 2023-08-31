@@ -16,7 +16,9 @@ import androidx.core.content.FileProvider
 import com.qc.device.model.Result
 import com.qc.device.model.ResultError
 import id.zelory.compressor.Compressor
+import id.zelory.compressor.constraint.default
 import id.zelory.compressor.constraint.quality
+import id.zelory.compressor.constraint.resolution
 import id.zelory.compressor.constraint.size
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -56,7 +58,8 @@ class CameraPicker(private val activity: ComponentActivity) {
                     val path = try {
                         val compressedImageFile =
                             Compressor.compress(activity, File(photoFilePath!!)) {
-                                size(819200)
+                                resolution(1080, 1080)
+                                size(1_097_152)
                             }
                         compressedImageFile.path
 
