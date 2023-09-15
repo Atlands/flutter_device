@@ -11,6 +11,12 @@ Android
 		}
 	}
 
+Web
+
+```js
+<script src="//cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/2.1.0/fingerprint2.min.js"></script>
+```
+
 Flutter
 
 ```yaml

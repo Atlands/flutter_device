@@ -10,7 +10,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  plugin_platform_interface: ^2.1.4
+  flutter_web_plugins:
+    sdk: flutter
+  plugin_platform_interface: ^2.0.2
+
+  image_picker_for_web: ^3.0.0
+  #  location_web: ^4.1.1
+  intl: ^0.18.1
+  fingerprintjs: ^2.0.0
+#  location_platform_interface: ^3.1.1
+#  geolocator_web: ^2.2.0
 
 dev_dependencies:
   flutter_test:
@@ -39,6 +48,9 @@ flutter:
         pluginClass: FlutterDevicePlugin
       ios:
         pluginClass: FlutterDevicePlugin
+      web:
+        pluginClass: FlutterDeviceWeb
+        fileName: flutter_device_web.dart
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

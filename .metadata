@@ -4,7 +4,7 @@
 # This file should be version controlled.
 
 version:
-  revision: 682aa387cfe4fbd71ccd5418b2c2a075729a1c66
+  revision: 135454af32477f815a7525073027a3ff9eff1bfd
   channel: stable
 
 project_type: plugin
@@ -13,14 +13,17 @@ project_type: plugin
 migration:
   platforms:
     - platform: root
-      create_revision: 682aa387cfe4fbd71ccd5418b2c2a075729a1c66
-      base_revision: 682aa387cfe4fbd71ccd5418b2c2a075729a1c66
+      create_revision: 135454af32477f815a7525073027a3ff9eff1bfd
+      base_revision: 135454af32477f815a7525073027a3ff9eff1bfd
     - platform: android
-      create_revision: 682aa387cfe4fbd71ccd5418b2c2a075729a1c66
-      base_revision: 682aa387cfe4fbd71ccd5418b2c2a075729a1c66
+      create_revision: 135454af32477f815a7525073027a3ff9eff1bfd
+      base_revision: 135454af32477f815a7525073027a3ff9eff1bfd
     - platform: ios
-      create_revision: 682aa387cfe4fbd71ccd5418b2c2a075729a1c66
-      base_revision: 682aa387cfe4fbd71ccd5418b2c2a075729a1c66
+      create_revision: 135454af32477f815a7525073027a3ff9eff1bfd
+      base_revision: 135454af32477f815a7525073027a3ff9eff1bfd
+    - platform: web
+      create_revision: 135454af32477f815a7525073027a3ff9eff1bfd
+      base_revision: 135454af32477f815a7525073027a3ff9eff1bfd
 
   # User provided section
 
