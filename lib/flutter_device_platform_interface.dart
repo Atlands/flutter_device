@@ -29,7 +29,8 @@ abstract class FlutterDevicePlatform extends PlatformInterface {
     throw UnimplementedError('contactPicker() has not been implemented.');
   }
 
-  Future<String?> cameraPicker({bool font = false}) {
+  Future<String?> cameraPicker(
+      {double? maxWidth, double? maxHeight, int? imageQuality, bool? front}) {
     throw UnimplementedError('cameraPicker() has not been implemented.');
   }
 

@@ -72,8 +72,11 @@ class _RootPageState extends State<RootPage> {
                 ElevatedButton(
                     onPressed: () async {
                       try {
-                        var result =
-                            await FlutterDevice.cameraPicker(font: true);
+                        var result = await FlutterDevice.cameraPicker(
+                            front: false,
+                            imageQuality: 10,
+                            maxWidth: 100,
+                            maxHeight: 100);
                         print(result);
                       } catch (e) {
                         print(e);

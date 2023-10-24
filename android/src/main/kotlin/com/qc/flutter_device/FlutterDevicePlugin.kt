@@ -55,8 +55,14 @@ class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             }
 
             "camera_picker" -> {
-                val font = call.arguments as? Boolean ?: false
-                cameraPicker.picker(font) {
+                val arg = call.arguments as Map<*, *>
+                val imageOption = ImageOption(
+                    maxWidth = arg["maxWidth"] as Double?,
+                    maxHeight = arg["maxHeight"] as Double?,
+                    imageQuality = arg["imageQuality"] as Int? ?: 100,
+                    front = arg["front"] as? Boolean ?: false,
+                )
+                cameraPicker.picker(imageOption) {
                     if (it.code == ResultError.RESULT_OK) {
                         result.success(it.data)
                     } else {

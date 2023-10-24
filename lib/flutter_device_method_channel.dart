@@ -21,8 +21,17 @@ class MethodChannelFlutterDevice extends FlutterDevicePlatform {
   }
 
   @override
-  Future<String?> cameraPicker({bool font = false}) async {
-    String? result = await methodChannel.invokeMethod('camera_picker', font);
+  Future<String?> cameraPicker(
+      {double? maxWidth,
+      double? maxHeight,
+      int? imageQuality,
+      bool? front}) async {
+    String? result = await methodChannel.invokeMethod('camera_picker', {
+      "maxWidth": maxWidth,
+      "maxHeight": maxHeight,
+      "imageQuality": imageQuality,
+      "front": front,
+    });
     return result;
   }
 

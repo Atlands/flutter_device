@@ -6,34 +6,31 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
-import android.os.Environment
 import android.provider.MediaStore
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.lifecycle.lifecycleScope
 import com.qc.device.model.Result
 import com.qc.device.model.ResultError
-import id.zelory.compressor.Compressor
-import id.zelory.compressor.constraint.default
-import id.zelory.compressor.constraint.quality
-import id.zelory.compressor.constraint.resolution
-import id.zelory.compressor.constraint.size
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import java.io.File
 import java.util.UUID
 
+data class ImageOption(
+    val maxWidth: Double?,
+    val maxHeight: Double?,
+    val imageQuality: Int,
+    val front: Boolean,
+)
+
 class CameraPicker(private val activity: ComponentActivity) {
     private var onResult: ((Result<String?>) -> Unit)? = null
-    private var font = false
+    private var imageOption = ImageOption(null, null, 100, false)
 
-    //    private var photoUri: Uri? = null
     private var photoFilePath: String? = null
-    private val scope = CoroutineScope(Dispatchers.IO)
+    private val imageResizer = ImageResizer(activity, ExifDataCopier())
 
     private var permission =
         activity.registerForActivityResult(ActivityResultContracts.RequestPermission()) {
@@ -54,18 +51,14 @@ class CameraPicker(private val activity: ComponentActivity) {
     private val cameraIntent =
         activity.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK && photoFilePath != null) {
-                scope.launch {
-                    val path = try {
-                        val compressedImageFile =
-                            Compressor.compress(activity, File(photoFilePath!!)) {
-                                resolution(1080, 1080)
-                                size(1_097_152)
-                            }
-                        compressedImageFile.path
+                activity.lifecycleScope.launch {
 
-                    } catch (e: Exception) {
-                        photoFilePath
-                    }
+                    val path = imageResizer.resizeImageIfNeeded(
+                        photoFilePath,
+                        imageOption.maxWidth,
+                        imageOption.maxHeight,
+                        imageOption.imageQuality
+                    )
 
                     onResult?.invoke(Result(ResultError.RESULT_OK, null, path))
 
@@ -82,9 +75,9 @@ class CameraPicker(private val activity: ComponentActivity) {
         }
 
 
-    fun picker(font: Boolean = false, onResult: (Result<String?>) -> Unit) {
+    fun picker(imageOption: ImageOption, onResult: (Result<String?>) -> Unit) {
         this.onResult = onResult
-        this.font = font
+        this.imageOption = imageOption
 
         if (ContextCompat.checkSelfPermission(
                 activity,
@@ -99,7 +92,7 @@ class CameraPicker(private val activity: ComponentActivity) {
 
     private fun takePicture() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (font) {
+        if (imageOption.front) {
             intent.putExtra("android.intent.extras.CAMERA_FACING", 1)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 intent.putExtra("android.intent.extra.USE_FRONT_CAMERA", true)

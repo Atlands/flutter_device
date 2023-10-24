@@ -9,7 +9,6 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 class MockFlutterDevicePlatform
     with MockPlatformInterfaceMixin
     implements FlutterDevicePlatform {
-
   @override
   Future<String?> getPlatformVersion() => Future.value('42');
 
@@ -92,7 +91,8 @@ class MockFlutterDevicePlatform
   }
 
   @override
-  Future<String?> cameraPicker({bool font = false}) {
+  Future<String?> cameraPicker(
+      {double? maxWidth, double? maxHeight, int? imageQuality, bool? front}) {
     // TODO: implement cameraPicker
     throw UnimplementedError();
   }
@@ -115,6 +115,5 @@ void main() {
     FlutterDevice flutterDevicePlugin = FlutterDevice();
     MockFlutterDevicePlatform fakePlatform = MockFlutterDevicePlatform();
     FlutterDevicePlatform.instance = fakePlatform;
-
   });
 }

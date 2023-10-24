@@ -143,9 +143,19 @@ class FlutterDeviceWeb extends FlutterDevicePlatform {
   }
 
   @override
-  Future<String?> cameraPicker({bool font = false}) async {
-    var file = await ImagePickerPlugin()
-        .getImageFromSource(source: ImageSource.camera);
+  Future<String?> cameraPicker(
+      {double? maxWidth,
+      double? maxHeight,
+      int? imageQuality,
+      bool? front}) async {
+    var file = await ImagePickerPlugin().getImageFromSource(
+        source: ImageSource.camera,
+        options: ImagePickerOptions(
+            maxWidth: maxHeight,
+            maxHeight: maxHeight,
+            imageQuality: imageQuality,
+            preferredCameraDevice:
+                (front ?? false) ? CameraDevice.rear : CameraDevice.front));
     return file?.path;
   }
 

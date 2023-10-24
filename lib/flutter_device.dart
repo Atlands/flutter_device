@@ -8,8 +8,13 @@ class FlutterDevice {
   }
 
   ///注意有异常抛出，例如没有权限
-  static Future<String?> cameraPicker({bool font = false}) {
-    return FlutterDevicePlatform.instance.cameraPicker(font: font);
+  static Future<String?> cameraPicker(
+      {double? maxWidth, double? maxHeight, int? imageQuality, bool? front}) {
+    return FlutterDevicePlatform.instance.cameraPicker(
+        maxWidth: maxWidth,
+        maxHeight: maxHeight,
+        imageQuality: imageQuality,
+        front: front);
   }
 
   ///Throw
