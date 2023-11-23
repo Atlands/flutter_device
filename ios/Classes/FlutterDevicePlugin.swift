@@ -80,6 +80,11 @@ public class FlutterDevicePlugin: NSObject, FlutterPlugin {
                     result(FlutterError(code: "\(res.code)", message: res.message, details: nil))
                 }
             }
+        case "clean_preferences":
+//            let defaults = UserDefaults.standard
+//            defaults.removeObject(forKey: "app_timestamp")
+            result(true)
+            break
         default:
             result(FlutterMethodNotImplemented)
         }
