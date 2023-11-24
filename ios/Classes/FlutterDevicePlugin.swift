@@ -28,8 +28,8 @@ public class FlutterDevicePlugin: NSObject, FlutterPlugin {
             let data = getJsonString(from: deviceUtil.getDevice())
             result(data)
         case "camera_picker":
-            let font = call.arguments as? Bool ?? false
-            cameraPicker.picker(font: font) { res in
+            let option = call.arguments as? [String: Any?] ?? [:]
+            cameraPicker.picker(option: ImageOption(maxWidth: option["maxWidth"] as? Double, maxHeight: option["maxHeight"] as? Double, imageQuality: option["imageQuality"] as! CGFloat, front: option["front"] as! Bool)) { res in
                 if(res.code == ResultError.resultOK){
                     result(res.data)
                 } else {

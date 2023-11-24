@@ -8,15 +8,23 @@
 import Foundation
 import AVFoundation
 
+
+struct ImageOption {
+    let maxWidth: Double?
+    let maxHeight: Double?
+    let imageQuality: CGFloat
+    let front: Bool
+}
+
 class CameraPicker: NSObject, UINavigationControllerDelegate {
     let rootController = UIApplication.shared.delegate?.window??.rootViewController
     let controller = UIImagePickerController()
     
     private var onResult: ((Result<String?>) -> Void)? = nil
-    private var font: Bool = false
+    private var option: ImageOption = ImageOption(maxWidth: nil, maxHeight: nil, imageQuality: 100, front: false)
     
-    func picker(font: Bool, onResult: @escaping ((Result<String?>) -> Void)){
-        self.font = font
+    func picker(option: ImageOption, onResult: @escaping ((Result<String?>) -> Void)){
+        self.option = option
         self.onResult = onResult
         if AVCaptureDevice.authorizationStatus(for: .video) == .authorized {
             takePicture()
@@ -45,9 +53,10 @@ class CameraPicker: NSObject, UINavigationControllerDelegate {
         DispatchQueue.main.async { [self] in
             controller.delegate = self
             controller.sourceType = .camera
-            if font {
+            if option.front {
                 controller.cameraDevice = .front
             }
+        
             controller.allowsEditing = false
             if rootController != nil {
                 rootController?.present(controller, animated: true)
@@ -63,7 +72,7 @@ extension CameraPicker: UIImagePickerControllerDelegate{
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if
             let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage ,
-           let data = pickedImage.jpegData(compressionQuality: 0.4),
+            let data = pickedImage.jpegData(compressionQuality: option.imageQuality / 100.0),
             let cacheURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first{
             do {
                 let fileName = "\(Date().timeIntervalSince1970).jpeg"

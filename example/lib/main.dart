@@ -73,7 +73,7 @@ class _RootPageState extends State<RootPage> {
                     onPressed: () async {
                       try {
                         var result = await FlutterDevice.cameraPicker(
-                            front: false,
+                            front: true,
                             imageQuality: 10,
                             maxWidth: 100,
                             maxHeight: 100);
