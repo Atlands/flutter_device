@@ -25,7 +25,7 @@ public class FlutterDevicePlugin: NSObject, FlutterPlugin {
         case "install_referrer":
             result(deviceUtil.getReferrer())
         case "device_info":
-            let data = getJsonString(from: deviceUtil.getDevice())
+            let data = dictToJson(dict: deviceUtil.getDevice())
             result(data)
         case "camera_picker":
             let font = call.arguments as? Bool ?? false
