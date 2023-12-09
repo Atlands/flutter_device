@@ -84,7 +84,8 @@ public class FlutterDevicePlugin: NSObject, FlutterPlugin {
 //            let defaults = UserDefaults.standard
 //            defaults.removeObject(forKey: "app_timestamp")
             result(true)
-            break
+        case "save_preferences":
+            result(true)
         default:
             result(FlutterMethodNotImplemented)
         }
