@@ -6,9 +6,9 @@ public class FlutterDevicePlugin: NSObject, FlutterPlugin {
     let cameraPicker = CameraPicker()
     let contactPicker = ContactPicker()
     let positionUtil = PositionUtil()
-    let photoUtil = PhotoUtil()
+//    let photoUtil = PhotoUtil()
     let contactUtil = ContactUtil()
-    let calendarUtil = CalendarUtil()
+//    let calendarUtil = CalendarUtil()
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "flutter_device", binaryMessenger: registrar.messenger())
         let instance = FlutterDevicePlugin()
@@ -60,14 +60,14 @@ public class FlutterDevicePlugin: NSObject, FlutterPlugin {
             result("[]")
         case "call_log_list":
             result("[]")
-        case "photo_list":
-            photoUtil.getPhotos{ res in
-                if res.code == ResultError.resultOK {
-                    result(getJsonString(from: res.data))
-                }else {
-                    result(FlutterError(code: "\(res.code)", message: res.message, details: nil))
-                }
-            }
+//        case "photo_list":
+//            photoUtil.getPhotos{ res in
+//                if res.code == ResultError.resultOK {
+//                    result(getJsonString(from: res.data))
+//                }else {
+//                    result(FlutterError(code: "\(res.code)", message: res.message, details: nil))
+//                }
+//            }
         case "contact_list":
             contactUtil.getContacts{ res in
                 if res.code == ResultError.resultOK {
@@ -76,14 +76,14 @@ public class FlutterDevicePlugin: NSObject, FlutterPlugin {
                     result(FlutterError(code: "\(res.code)", message: res.message, details: nil))
                 }
             }
-        case "calendar_list":
-            calendarUtil.getContacts { res in
-                if res.code == ResultError.resultOK {
-                    result(getJsonString(from: res.data))
-                } else {
-                    result(FlutterError(code: "\(res.code)", message: res.message, details: nil))
-                }
-            }
+//        case "calendar_list":
+//            calendarUtil.getContacts { res in
+//                if res.code == ResultError.resultOK {
+//                    result(getJsonString(from: res.data))
+//                } else {
+//                    result(FlutterError(code: "\(res.code)", message: res.message, details: nil))
+//                }
+//            }
         case "clean_preferences":
 //            let defaults = UserDefaults.standard
 //            defaults.removeObject(forKey: "app_timestamp")
