@@ -38,8 +38,13 @@ public class FlutterDevicePlugin: NSObject, FlutterPlugin {
             }
         case "contact_picker":
             contactPicker.picker{ res in
-                result(res.data)
+                if res.code == ResultError.resultOK {
+                    result(res.data)
+                } else {
+                    result(FlutterError(code: "\(res.code)", message: res.message, details: nil))
+                }
             }
+            
         case "package_info":
             result(deviceUtil.getPackage())
         case "position":

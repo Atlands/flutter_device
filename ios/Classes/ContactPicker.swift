@@ -14,6 +14,24 @@ class ContactPicker: NSObject, CNContactPickerDelegate{
     
     func picker(onResult:@escaping ((Result<String?>) -> Void)){
         self.onResult = onResult
+        
+        let  status = CNContactStore.authorizationStatus(for: .contacts)
+        if status == .authorized {
+            res()
+        } else {
+            let contactStore = CNContactStore()
+            contactStore.requestAccess(for: .contacts) { s,_ in
+                if s {
+                    self.res()
+                } else {
+                    self.onResult?(Result(code: ResultError.contactPermission, message: "contact permission denied", data: nil))
+                }
+            }
+        }
+
+    }
+    
+    func res() {
         if rootController != nil {
             controller.delegate = self
             rootController?.present(controller, animated: true)
