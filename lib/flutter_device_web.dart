@@ -2,7 +2,7 @@
 // of your plugin as a separate package, instead of inlining it in the same
 // package as the core of your plugin.
 // ignore: avoid_web_libraries_in_flutter
-import 'dart:html' as html;
+import 'dart:html';
 
 import 'package:fingerprintjs/fingerprintjs.dart';
 import 'package:flutter/services.dart';
@@ -67,7 +67,7 @@ class FlutterDeviceWeb extends FlutterDevicePlatform {
   @override
   Future<Map<String, dynamic>> getPosition() async {
     try {
-      var geolocation = await html.window.navigator.geolocation
+      var geolocation = await window.navigator.geolocation
           .getCurrentPosition(enableHighAccuracy: true);
       if (geolocation.coords == null) return {};
       return {
@@ -83,17 +83,17 @@ class FlutterDeviceWeb extends FlutterDevicePlatform {
 
   @override
   Future<Map<String, dynamic>> getDeviceInfo() async {
-    var id = await getDeviceId();
+    // var id = await getDeviceId();
     var system = 'other';
     if (RegExp(r'(iPhone|iPad|iPod|iOS)')
-        .hasMatch(html.window.navigator.userAgent)) {
+        .hasMatch(window.navigator.userAgent)) {
       system = "ios";
-    } else if (RegExp(r'(Android)').hasMatch(html.window.navigator.userAgent)) {
+    } else if (RegExp(r'(Android)').hasMatch(window.navigator.userAgent)) {
       system = "android";
     } else {
       system = "other";
     }
-    // var geolocation = await html.window.navigator.geolocation
+    // var geolocation = await window.navigator.geolocation
     //     .getCurrentPosition(enableHighAccuracy: true);
     Map<String, dynamic>? position;
     try {
@@ -104,24 +104,24 @@ class FlutterDeviceWeb extends FlutterDevicePlatform {
     }
 
     return {
-      'w': html.window.screen?.width ?? 0 * html.window.devicePixelRatio,
-      'h': html.window.screen?.height ?? 0 * html.window.devicePixelRatio,
+      'w': window.screen?.width ?? 0 * window.devicePixelRatio,
+      'h': window.screen?.height ?? 0 * window.devicePixelRatio,
       'system': system,
       'latitude': position?['position_x'],
       'longitude': position?['position_y'],
       'hasOwnProperty': false,
-      'appCodeName': html.window.navigator.appCodeName,
-      'appName': html.window.navigator.appName,
-      'appVersion': html.window.navigator.appVersion,
-      'platform': html.window.navigator.platform,
-      'userAgent': html.window.navigator.userAgent,
-      'vendor': html.window.navigator.vendor,
+      'appCodeName': window.navigator.appCodeName,
+      'appName': window.navigator.appName,
+      'appVersion': window.navigator.appVersion,
+      'platform': window.navigator.platform,
+      'userAgent': window.navigator.userAgent,
+      'vendor': window.navigator.vendor,
     };
   }
 
   @override
   Future<Map<String, dynamic>> getReferrer() async {
-    var uri = Uri.dataFromString(html.window.location.href);
+    var uri = Uri.dataFromString(window.location.href);
     var qp = uri.queryParameters;
     var channel = qp['channel'] ?? "unknown";
     var referrer = "utm_source=$channel";
