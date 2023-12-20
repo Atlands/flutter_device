@@ -7,16 +7,16 @@
 
 import Foundation
 
-extension DeviceUtil {
-    func getBatter() -> Batter {
-        if !uiDevice.isBatteryMonitoringEnabled {
-            uiDevice.isBatteryMonitoringEnabled = true
+extension Deeml {
+    func getBatter() -> BDMD {
+        if !mlad.isBatteryMonitoringEnabled {
+            mlad.isBatteryMonitoringEnabled = true
         }
-        return Batter(level: uiDevice.batteryLevel, status: getStatus())
+        return BDMD(level: mlad.batteryLevel, status: getStatus())
     }
     
     private func getStatus() -> Int {
-        let state = uiDevice.batteryState
+        let state = mlad.batteryState
         switch state {
         case .unknown:
             return 1

@@ -10,8 +10,8 @@ import Network
 import Reachability
 import CoreTelephony
 
-extension DeviceUtil {
-    func getNetwork() -> Network {
+extension Deeml {
+    func getNetwork() -> MELAW {
         
         // 获取系统的代理设置
         let cfDict = CFNetworkCopySystemProxySettings()
@@ -48,7 +48,7 @@ extension DeviceUtil {
         let networkName = (keys["ipsec0"] as? Dictionary<String, Any>)?["InterfaceName"] as? String ?? ""
         
         // 创建一个 Network 对象，并赋值查询到的信息
-        return Network(
+        return MELAW(
             dns: dns,
             httpProxyPort: "\(httpProxyPort)",
             isUsingProxyPort: isUsingProxyPort,

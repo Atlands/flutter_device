@@ -7,13 +7,13 @@
 
 import Foundation
 
-extension DeviceUtil {
-    func getSpace() -> Space {
+extension Deeml {
+    func getSpace() -> MAOE {
         
-        return Space(ram: AppClass(available: nil, total: Int(processInfo.physicalMemory)), storage: getStorage())
+        return MAOE(ram: MOEA(available: nil, total: Int(amlde.physicalMemory)), storage: getStorage())
     }
     
-    private func getStorage() -> AppClass? {
+    private func getStorage() -> MOEA? {
         // 获取设备的根目录路径
         let rootPath = NSHomeDirectory()
 
@@ -24,7 +24,7 @@ extension DeviceUtil {
             
             // 获取可用容量，返回一个字节为单位的数值
             let freeBytes = systemAttributes[FileAttributeKey.systemFreeSize] as? Int
-            return AppClass(available: freeBytes, total: totalBytes)
+            return MOEA(available: freeBytes, total: totalBytes)
         } else {
             return nil
         }

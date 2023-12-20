@@ -5,10 +5,10 @@
 //  Created by atlands on 2023/8/2.
 //
 
-class Result<T> {
-    let code: Int;
-        let message: String?;
-        let data: T;
+class BACKBODY<T> {
+    let code: Int
+    let message: String?
+    let data: T
     
     init(code: Int,message: String?, data: T) {
         self.code = code

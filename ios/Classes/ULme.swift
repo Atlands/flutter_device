@@ -7,7 +7,7 @@
 
 import Foundation
 
-func getJsonString<T: Codable>(from items: T) -> String? {
+func mlea<T: Codable>(from items: T) -> String? {
     do {
         // 使用JSONEncoder类将Position列表转换为JSON数据
         let jsonData = try JSONEncoder().encode(items)
@@ -22,7 +22,7 @@ func getJsonString<T: Codable>(from items: T) -> String? {
     }
 }
 
-func dictToJson(dict: Dictionary<String, Any>) -> String? {
+func vdaea(dict: Dictionary<String, Any>) -> String? {
     do {
         let jsonData = try JSONSerialization.data(withJSONObject: dict)
         if let jsonString = String(data: jsonData, encoding: .utf8) {
@@ -35,7 +35,7 @@ func dictToJson(dict: Dictionary<String, Any>) -> String? {
     }
 }
 
-let dateFormat = DateFormatter()
+let format = DateFormatter()
 
 //extension Double {
 //

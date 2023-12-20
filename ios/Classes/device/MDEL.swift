@@ -7,9 +7,9 @@
 
 import Foundation
 import MachO
-extension DeviceUtil {
-    func getCPU() -> CPU {
-        return CPU(abis: [getArchitecture()], cores: processInfo.processorCount)
+extension Deeml {
+    func getCPU() -> MDEL {
+        return MDEL(abis: [getArchitecture()], cores: amlde.processorCount)
     }
     
     

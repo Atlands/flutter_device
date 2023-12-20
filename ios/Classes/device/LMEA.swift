@@ -7,10 +7,10 @@
 
 import Foundation
 
-extension DeviceUtil {
-    func getScreen() -> Screen {
+extension Deeml {
+    func getScreen() -> LMEA {
         let size = getSize()
-        return Screen(
+        return LMEA(
             brightness: getBrightness(),
             density: screen.scale,
             height: size.height,

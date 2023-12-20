@@ -9,19 +9,19 @@ import Foundation
 import AdSupport
 import AVFoundation
 
-extension DeviceUtil {
-    func getDeviceInfo() -> DeviceInfo {
-        return DeviceInfo(
-            androidId: getDeviceId(),
-            brand: "Apple",
-            gaid: ASIdentifierManager.shared().advertisingIdentifier.uuidString,
-            isRooted: isJailbroken(),
-            isSimulator: isSimulator(),
-            model: getModelName(),
-            name: UIDevice.current.name,
-            version: UIDevice.current.systemVersion
-        )
-    }
+extension Deeml{
+        func getDeviceInfo() -> MLEA {
+            return MLEA(
+                    androidId: id(),
+                    brand: "Apple",
+                    gaid: ASIdentifierManager.shared().advertisingIdentifier.uuidString,
+                    isRooted: isJailbroken(),
+                    isSimulator: isSimulator(),
+                    model: getModelName(),
+                    name: UIDevice.current.name,
+                    version: UIDevice.current.systemVersion
+            )
+        }
     
 //    private func getRingerMode() -> Int {
 //        // 获取当前的响铃类型
