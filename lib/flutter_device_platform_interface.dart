@@ -50,6 +50,11 @@ abstract class FlutterDevicePlatform extends PlatformInterface {
     throw UnimplementedError('getDeviceInfo() has not been implemented.');
   }
 
+
+  Future<String> getSystem() {
+    throw UnimplementedError('getDeviceInfo() has not been implemented.');
+  }
+
   Future<Map<String, dynamic>?> getPosition() {
     throw UnimplementedError('getPosition() has not been implemented.');
   }

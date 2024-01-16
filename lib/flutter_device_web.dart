@@ -85,7 +85,7 @@ class FlutterDeviceWeb extends FlutterDevicePlatform {
   Future<Map<String, dynamic>> getDeviceInfo() async {
     // var id = await getDeviceId();
     var system = 'other';
-    if (RegExp(r'(iPhone|iPad|iPod|iOS)')
+    if (RegExp(r'(iPhone|iPad|iPod|iOS|Mac)')
         .hasMatch(window.navigator.userAgent)) {
       system = "ios";
     } else if (RegExp(r'(Android)').hasMatch(window.navigator.userAgent)) {
@@ -117,6 +117,21 @@ class FlutterDeviceWeb extends FlutterDevicePlatform {
       'userAgent': window.navigator.userAgent,
       'vendor': window.navigator.vendor,
     };
+  }
+
+  @override
+  Future<String> getSystem() async {
+    // var id = await getDeviceId();
+    var system = 'other';
+    if (RegExp(r'(iPhone|iPad|iPod|iOS|Mac)')
+        .hasMatch(window.navigator.userAgent)) {
+      system = "ios";
+    } else if (RegExp(r'(Android)').hasMatch(window.navigator.userAgent)) {
+      system = "android";
+    } else {
+      system = "other";
+    }
+    return system;
   }
 
   @override
