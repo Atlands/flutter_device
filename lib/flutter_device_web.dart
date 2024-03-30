@@ -139,19 +139,21 @@ class FlutterDeviceWeb extends FlutterDevicePlatform {
 
   @override
   Future<Package> getPackageInfo() async {
-    return Package(appName: '', packageName: getSystem(), versionName: '');
+    return Package(appName: '', packageName: '', versionName: '');
   }
 
+  @override
   String getSystem() {
     // var id = await getDeviceId();
-    var system = 'other';
-    if (RegExp(r'(iPhone|iPad|iPod|iOS|Mac)')
+    var system = 'pc';
+    if (RegExp(r'(iPhone|iPad|iPod|iOS)')
         .hasMatch(html.window.navigator.userAgent)) {
       system = "ios";
-    } else if (RegExp(r'(Android)').hasMatch(html.window.navigator.userAgent)) {
+    } else if (RegExp(r'(Android|Adr)')
+        .hasMatch(html.window.navigator.userAgent)) {
       system = "android";
     } else {
-      system = "other";
+      system = "pc";
     }
     return system;
   }

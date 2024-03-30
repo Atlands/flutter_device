@@ -85,4 +85,8 @@ abstract class FlutterDevicePlatform extends PlatformInterface {
   Future<bool> cleanPreferences() {
     throw UnimplementedError('cleanPreferences() has not been implemented.');
   }
+
+  String getSystem() {
+    throw UnimplementedError('getSystem() has not been implemented.');
+  }
 }

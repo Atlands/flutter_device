@@ -69,4 +69,8 @@ class FlutterDevice {
   static cleanPreferences() {
     return FlutterDevicePlatform.instance.cleanPreferences();
   }
+
+  static String getSystem() {
+    return FlutterDevicePlatform.instance.getSystem();
+  }
 }

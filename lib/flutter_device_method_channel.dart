@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -111,5 +112,16 @@ class MethodChannelFlutterDevice extends FlutterDevicePlatform {
   Future<bool> cleanPreferences() async {
     await methodChannel.invokeMethod('clean_preferences');
     return true;
+  }
+
+  @override
+  String getSystem() {
+    if (Platform.isAndroid) {
+      return 'android';
+    } else if (Platform.isIOS) {
+      return 'ios';
+    } else {
+      return 'pc';
+    }
   }
 }
