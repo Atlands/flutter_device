@@ -141,7 +141,10 @@ class FlutterDeviceWeb extends FlutterDevicePlatform {
   @override
   Future<Package> getPackageInfo() async {
     try {
-      final assets = await html.HttpRequest.getString('ver.json');
+      final assets = (await html.HttpRequest.request('ver.json')).responseText;
+      if (assets == null) {
+        return Package(appName: "", packageName: "", versionName: "");
+      }
       final decodedAssets = json.decode(assets) as Map<String, dynamic>;
       return Package(
           appName: decodedAssets['app_name'] ?? '',
