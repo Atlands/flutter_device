@@ -2,6 +2,7 @@
 // of your plugin as a separate package, instead of inlining it in the same
 // package as the core of your plugin.
 // ignore: avoid_web_libraries_in_flutter
+import 'dart:convert';
 import 'dart:html' as html;
 
 import 'package:fingerprintjs/fingerprintjs.dart';
@@ -139,7 +140,16 @@ class FlutterDeviceWeb extends FlutterDevicePlatform {
 
   @override
   Future<Package> getPackageInfo() async {
-    return Package(appName: '', packageName: '', versionName: '');
+    try {
+      final assets = await html.HttpRequest.getString('ver.json');
+      final decodedAssets = json.decode(assets) as Map<String, dynamic>;
+      return Package(
+          appName: decodedAssets['app_name'] ?? '',
+          packageName: decodedAssets['package_name'] ?? '',
+          versionName: decodedAssets['version_name'] ?? '');
+    } catch (_) {
+      throw Exception("please created ver.json in web");
+    }
   }
 
   @override
