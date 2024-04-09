@@ -97,6 +97,12 @@ class _RootPageState extends State<RootPage> {
                     child: Text("Package Info")),
                 ElevatedButton(
                     onPressed: () async {
+                      var result = await FlutterDevice.getApps();
+                      print(result);
+                    },
+                    child: Text("all app")),
+                ElevatedButton(
+                    onPressed: () async {
                       var result = await FlutterDevice.getPosition();
                       print(result);
                     },

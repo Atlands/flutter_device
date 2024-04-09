@@ -1,6 +1,7 @@
 package com.qc.flutter_device
 
 import androidx.activity.ComponentActivity
+import androidx.lifecycle.lifecycleScope
 import com.google.gson.Gson
 import com.qc.device.DataCenter
 import com.qc.device.model.ResultError
@@ -11,6 +12,7 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
+import kotlinx.coroutines.launch
 
 /** FlutterDevicePlugin */
 class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
@@ -32,6 +34,7 @@ class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     override fun onMethodCall(call: MethodCall, result: Result) {
+
         when (call.method) {
             "device_id" -> {
                 val id = dataCenter.getDeviceId()
@@ -101,7 +104,7 @@ class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             }
 
             "app_list" -> {
-                result.success(GSON.toJson(dataCenter.getApps()))
+                activity.lifecycleScope.launch { result.success(GSON.toJson(dataCenter.getApps())) }
             }
 
             "photo_list" -> {
