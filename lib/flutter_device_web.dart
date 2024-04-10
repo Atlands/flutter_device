@@ -5,7 +5,6 @@
 import 'dart:convert';
 import 'dart:html' as html;
 
-import 'package:fingerprintjs/fingerprintjs.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_device/model/contact.dart';
 import 'package:flutter_device/model/package.dart';
@@ -134,8 +133,8 @@ class FlutterDeviceWeb extends FlutterDevicePlatform {
 
   @override
   Future<String> getDeviceId() async {
-    var visitorId = await Fingerprint.getHash();
-    return visitorId;
+    // var visitorId = await Fingerprint.getHash();
+    return 'visitorId';
   }
 
   @override
