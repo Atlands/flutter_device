@@ -4,6 +4,7 @@ library fingerprintjs;
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:js/js.dart';
 
@@ -73,12 +74,15 @@ Future<String> getIPAddress() async {
     final ipAddress = jsonDecode(result.body)['ip'];
     return ipAddress;
   } catch (e) {
-    print('Error fetching IP address: $e');
+    debugPrint('Error fetching IP address: $e');
     return '192.168.0.1';
   }
 }
 
-Future<String> getVisitorId() async {
+String vid = '';
+
+FutureOr<String> getVisitorId() async {
+  if (vid.isNotEmpty) return vid;
   try {
     var components = await Fingerprint.get();
     var ip = await getIPAddress();
@@ -96,7 +100,6 @@ Future<String> getVisitorId() async {
     var visitorId = Fingerprint.x64hash128(values.join(), 31);
     return visitorId;
   } catch (e) {
-    print(e);
     return Fingerprint.getHash();
   }
 }
