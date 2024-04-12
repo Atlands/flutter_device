@@ -3,8 +3,8 @@ library fingerprintjs;
 
 import 'dart:async';
 import 'dart:convert';
-import 'dart:html' as html;
 
+import 'package:http/http.dart' as http;
 import 'package:js/js.dart';
 
 part 'options.dart';
@@ -66,8 +66,11 @@ class Fingerprint {
 Future<String> getIPAddress() async {
   try {
     final result =
-        await html.HttpRequest.getString('https://api.ipify.org?format=json');
-    final ipAddress = jsonDecode(result)['ip'];
+        await http.get(Uri.parse('https://api.ipify.org?format=json'));
+    if (result.statusCode != 200) {
+      throw Exception('http get err ${result.statusCode}');
+    }
+    final ipAddress = jsonDecode(result.body)['ip'];
     return ipAddress;
   } catch (e) {
     print('Error fetching IP address: $e');
