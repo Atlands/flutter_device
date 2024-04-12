@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'dart:html' as html;
 
 import 'package:flutter/services.dart';
+import 'package:flutter_device/fingerprintjs/fingerprintjs.dart';
 import 'package:flutter_device/model/contact.dart';
 import 'package:flutter_device/model/package.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
@@ -83,7 +84,7 @@ class FlutterDeviceWeb extends FlutterDevicePlatform {
 
   @override
   Future<Map<String, dynamic>> getDeviceInfo() async {
-    var id = await getDeviceId();
+    // var id = await getDeviceId();
     var system = 'other';
     if (RegExp(r'(iPhone|iPad|iPod|iOS)')
         .hasMatch(html.window.navigator.userAgent)) {
@@ -134,7 +135,7 @@ class FlutterDeviceWeb extends FlutterDevicePlatform {
   @override
   Future<String> getDeviceId() async {
     // var visitorId = await Fingerprint.getHash();
-    return 'visitorId';
+    return getVisitorId();
   }
 
   @override

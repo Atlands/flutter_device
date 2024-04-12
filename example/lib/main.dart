@@ -58,6 +58,12 @@ class _RootPageState extends State<RootPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 ElevatedButton(
+                    onPressed: () async {
+                      var sys = await FlutterDevice.getDeviceId();
+                      print(sys);
+                    },
+                    child: const Text('get device id ')),
+                ElevatedButton(
                     onPressed: () {
                       var sys = FlutterDevice.getSystem();
                       print(sys);
