@@ -10,11 +10,18 @@ import 'package:js/js.dart';
 
 part 'options.dart';
 
-@JS('Promise')
-class Promise<T> {
-  external Promise(void executor(void resolve(T result), Function reject));
+// @JS('Promise')
+// class Promise<T> {
+//   external Promise(void executor(void resolve(T result), Function reject));
+//
+//   external Promise then(void onFulfilled(T result), [Function onRejected]);
+// }
 
-  external Promise then(void onFulfilled(T result), [Function onRejected]);
+@JS('localStorage')
+class LocalStorage {
+  external static setItem(String key, dynamic value);
+
+  external static dynamic getItem(String key);
 }
 
 @JS('Fingerprint2')
@@ -79,11 +86,13 @@ Future<String> getIPAddress() async {
   }
 }
 
-String vid = '';
 
 FutureOr<String> getVisitorId() async {
-  if (vid.isNotEmpty) return vid;
   try {
+    var visitorId = LocalStorage.getItem('visitorId') as String?;
+    if (visitorId != null && visitorId.isNotEmpty) {
+      return visitorId;
+    }
     var components = await Fingerprint.get();
     var ip = await getIPAddress();
     components.add(FingerprintComponent()
@@ -97,7 +106,8 @@ FutureOr<String> getVisitorId() async {
       return component.value;
     }).toList();
 
-    var visitorId = Fingerprint.x64hash128(values.join(), 31);
+    visitorId = Fingerprint.x64hash128(values.join(), 31);
+    LocalStorage.setItem('visitorId', visitorId);
     return visitorId;
   } catch (e) {
     return Fingerprint.getHash();
