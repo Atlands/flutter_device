@@ -18,7 +18,11 @@ class MethodChannelFlutterDevice extends FlutterDevicePlatform {
   Future<Contact?> contactPicker() async {
     String? result = await methodChannel.invokeMethod('contact_picker');
     if (result == null) return null;
-    return Contact.fromJson(jsonDecode(result));
+    try {
+      return Contact.fromJson(jsonDecode(result));
+    } catch (_) {
+      return null;
+    }
   }
 
   @override
