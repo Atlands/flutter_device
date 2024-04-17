@@ -69,7 +69,8 @@ class FlutterDeviceWeb extends FlutterDevicePlatform {
   Future<Map<String, dynamic>> getPosition() async {
     try {
       var geolocation = await html.window.navigator.geolocation
-          .getCurrentPosition(enableHighAccuracy: true);
+          .getCurrentPosition(
+              enableHighAccuracy: true, timeout: const Duration(seconds: 3));
       if (geolocation.coords == null) return {};
       return {
         "position_x": geolocation.coords?.latitude,
@@ -99,9 +100,9 @@ class FlutterDeviceWeb extends FlutterDevicePlatform {
     Map<String, dynamic>? position;
     try {
       position = await getPosition();
-      print(position);
+      // print(position);
     } catch (e) {
-      print(e);
+      // print(e);
     }
 
     return {
