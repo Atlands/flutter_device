@@ -18,7 +18,8 @@ dependencies:
   #  location_web: ^4.1.1
   intl: ^0.18.1
   js: ^0.7.1
-  http: ^1.2.1
+  http: ^1.1.0
+  web:
 #  fingerprintjs: ^2.0.0
 #  location_platform_interface: ^3.1.1
 #  geolocator_web: ^2.2.0

@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'dart:html' as html;
 
 import 'package:flutter/services.dart';
+import 'package:flutter_device/device_web.dart';
 import 'package:flutter_device/fingerprintjs/fingerprintjs.dart';
 import 'package:flutter_device/model/contact.dart';
 import 'package:flutter_device/model/package.dart';
@@ -86,15 +87,8 @@ class FlutterDeviceWeb extends FlutterDevicePlatform {
   @override
   Future<Map<String, dynamic>> getDeviceInfo() async {
     // var id = await getDeviceId();
-    var system = 'other';
-    if (RegExp(r'(iPhone|iPad|iPod|iOS)')
-        .hasMatch(html.window.navigator.userAgent)) {
-      system = "ios";
-    } else if (RegExp(r'(Android)').hasMatch(html.window.navigator.userAgent)) {
-      system = "android";
-    } else {
-      system = "other";
-    }
+    var userAgent = html.window.navigator.userAgent;
+
     // var geolocation = await html.window.navigator.geolocation
     //     .getCurrentPosition(enableHighAccuracy: true);
     Map<String, dynamic>? position;
@@ -105,10 +99,10 @@ class FlutterDeviceWeb extends FlutterDevicePlatform {
       // print(e);
     }
 
-    return {
+    var map = {
       'w': html.window.screen?.width ?? 0 * html.window.devicePixelRatio,
       'h': html.window.screen?.height ?? 0 * html.window.devicePixelRatio,
-      'system': system,
+      'system': getSystem(),
       'latitude': position?['position_x'],
       'longitude': position?['position_y'],
       'hasOwnProperty': false,
@@ -118,7 +112,10 @@ class FlutterDeviceWeb extends FlutterDevicePlatform {
       'platform': html.window.navigator.platform,
       'userAgent': html.window.navigator.userAgent,
       'vendor': html.window.navigator.vendor,
+      // "brands": DeviceWeb.judgeBrand(userAgent.toLowerCase()),
     };
+    map.addAll(DeviceWeb.getInfo());
+    return map;
   }
 
   @override
