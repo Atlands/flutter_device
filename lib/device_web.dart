@@ -112,7 +112,13 @@ class DeviceWeb {
       }
     }
 
-    return {'os': os, 'version': version, 'model': model, 'val': brands};
+    return {
+      'system': os,
+      'version': version,
+      'phoneModel': model,
+      'mobile_model': model,
+      'brands': brands
+    };
   }
 
   static String judgeBrand(String userAgent) {
