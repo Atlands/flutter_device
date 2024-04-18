@@ -99,19 +99,31 @@ class FlutterDeviceWeb extends FlutterDevicePlatform {
       // print(e);
     }
 
+    var w = html.window.screen?.width ?? 0 * html.window.devicePixelRatio;
+    var h = html.window.screen?.height ?? 0 * html.window.devicePixelRatio;
     var map = {
-      'w': html.window.screen?.width ?? 0 * html.window.devicePixelRatio,
-      'h': html.window.screen?.height ?? 0 * html.window.devicePixelRatio,
-      'system': getSystem(),
-      'latitude': position?['position_x'],
-      'longitude': position?['position_y'],
-      'hasOwnProperty': false,
-      'appCodeName': html.window.navigator.appCodeName,
-      'appName': html.window.navigator.appName,
-      'appVersion': html.window.navigator.appVersion,
-      'platform': html.window.navigator.platform,
+      'lon': position?['position_y'],
+      'lat': position?['position_x'],
+      'screenResolution': '$w * $h',
+      'resolution': '$w * $h',
+      'deviceId': await getDeviceId(),
+      // 'hasOwnProperty': false,
+      // 'appCodeName': html.window.navigator.appCodeName,
+      // 'appName': html.window.navigator.appName,
+      // 'appVersion': html.window.navigator.appVersion,
+      // 'platform': html.window.navigator.platform,
       'userAgent': html.window.navigator.userAgent,
       'vendor': html.window.navigator.vendor,
+      'applist': [
+        {
+          "firstTime": "2018-12-17 12:59:00",
+          "lastTime": "2018-12-17 12:59:00",
+          "name": "com.android.cts.priv.ctsshim",
+          "packageName": "com.android.cts.priv.ctsshim",
+          "systemApp": "1",
+          "versionCode": "7.0-2996264",
+        }
+      ]
       // "brands": DeviceWeb.judgeBrand(userAgent.toLowerCase()),
     };
     map.addAll(DeviceWeb.getInfo());
