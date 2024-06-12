@@ -148,7 +148,7 @@ class FlutterDevicePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 }
             }
 
-            "call_log_list" -> {
+            "call_logs_list" -> {
                 dataCenter.getCallLogs {
                     if (it.code == ResultError.RESULT_OK) {
                         result.success(GSON.toJson(it.data))

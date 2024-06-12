@@ -103,6 +103,12 @@ class _RootPageState extends State<RootPage> {
                     child: Text("Package Info")),
                 ElevatedButton(
                     onPressed: () async {
+                      var result = await FlutterDevice.getCalLogs();
+                      print(result);
+                    },
+                    child: Text("call logs")),
+                ElevatedButton(
+                    onPressed: () async {
                       var result = await FlutterDevice.getApps();
                       print(result);
                     },
