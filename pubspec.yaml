@@ -16,7 +16,7 @@ dependencies:
 
   image_picker_for_web: ^3.0.0
   #  location_web: ^4.1.1
-  intl: ^0.18.1
+  intl: any
   js: ^0.7.1
   http: ^1.1.0
   web:
